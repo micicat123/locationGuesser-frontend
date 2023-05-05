@@ -2,7 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { User } from "../models/user";
 import Cookies from "js-cookie";
-import Nav from "./Nav";
+import Nav from "./nav";
+import Footer from "./footer";
+import React from "react";
 
 const Wrapper = (props: any) => {
   const [user, setUser] = useState(new User());
@@ -35,10 +37,9 @@ const Wrapper = (props: any) => {
     <>
       <Nav user={user} />
       <main>{props.children}</main>
+      <Footer />
     </>
   );
 };
-
-//<Footer />;
 
 export default Wrapper;

@@ -14,13 +14,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, css } from "@mui/material/styles";
 import MUITheme from "../mui/theme";
-import theme from "../mui/theme";
 import { User } from "../models/user";
 import { Link } from "@mui/material";
 
@@ -30,7 +25,6 @@ const Nav = (props: { user: User }) => {
   const [image, setImage] = useState<string>(
     "pictures/unset-profile-picture.png"
   );
-  const pages = ["Home", "Profile settings", "Logout"];
   const settings = ["Update info", "Update password", "Update picture"];
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -53,6 +47,12 @@ const Nav = (props: { user: User }) => {
       })();
     }
   }, []);
+
+  const logout = async () => {
+    await axios.post("/auth/logout");
+    navigate("/");
+    window.location.reload();
+  };
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -130,19 +130,24 @@ const Nav = (props: { user: User }) => {
                         style={{
                           display: "flex",
                           gap: 15,
-                          color: "black",
                           alignItems: "center",
                         }}
                       >
                         <Link
                           href={"/login"}
-                          color="black"
                           underline="none"
                           sx={{ fontWeight: 500 }}
+                          color="textPrimary"
                         >
                           Sign in
                         </Link>
-                        <p>or</p>
+                        <Typography
+                          variant="body1"
+                          sx={{ mt: "4px" }}
+                          color="textPrimary"
+                        >
+                          or
+                        </Typography>
                         <Button
                           href="/signup"
                           variant="contained"
@@ -191,7 +196,6 @@ const Nav = (props: { user: User }) => {
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
                     onClick={handleOpenNavMenu}
-                    color="inherit"
                   >
                     <MenuIcon />
                   </IconButton>
@@ -213,11 +217,17 @@ const Nav = (props: { user: User }) => {
                       display: { xs: "block", md: "none" },
                     }}
                   >
-                    {pages.map((page) => (
-                      <MenuItem key={page} onClick={handleCloseNavMenu}>
-                        <Typography textAlign="center">{page}</Typography>
-                      </MenuItem>
-                    ))}
+                    <MenuItem key={"Home"} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{"Home"}</Typography>
+                    </MenuItem>
+                    <MenuItem key={"Profile page"} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">
+                        {"Profile page"}
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem key={"Logout"} onClick={handleCloseNavMenu}>
+                      <Typography textAlign="center">{"Logout"}</Typography>
+                    </MenuItem>
                   </Menu>
                 </Box>
                 <Typography
@@ -246,15 +256,30 @@ const Nav = (props: { user: User }) => {
                     marginRight: 15,
                   }}
                 >
-                  {pages.map((page) => (
-                    <Button
-                      key={page}
-                      onClick={handleCloseNavMenu}
-                      sx={{ my: 2, color: "black", display: "block" }}
-                    >
-                      {page}
-                    </Button>
-                  ))}
+                  <Button
+                    key={"Home"}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, display: "block" }}
+                  >
+                    {"Home"}
+                  </Button>
+                  <Button
+                    key={"Profile page"}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, display: "block" }}
+                  >
+                    {"Profle page"}
+                  </Button>
+                  <Button
+                    key={"Logout"}
+                    onClick={() => {
+                      handleCloseNavMenu();
+                      logout();
+                    }}
+                    sx={{ my: 2, display: "block" }}
+                  >
+                    {"Logout"}
+                  </Button>
                 </Box>
                 <Box sx={{ flexGrow: 0, mr: 2 }}>
                   <Tooltip title="Open settings">
