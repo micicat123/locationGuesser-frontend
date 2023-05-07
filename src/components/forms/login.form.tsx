@@ -21,10 +21,13 @@ const LoginForm = (props: {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-
+        pl: 2,
+        pr: 2,
+        ml: "auto",
+        mr: "auto",
         height: "90%",
-        ml: 5,
-        mr: 5,
+        minWidth: "20%",
+        maxWidth: "70%",
       }}
     >
       <Typography variant="h3" align="center" color={"textPrimary"}>
@@ -40,7 +43,7 @@ const LoginForm = (props: {
         Welcome back to Geotagger. We are glad that you are back.
       </Typography>
 
-      <form onSubmit={props.submit}>
+      <form onSubmit={props.submit} style={{ width: "100%" }}>
         <Box
           sx={{
             display: "flex",
@@ -50,7 +53,7 @@ const LoginForm = (props: {
         >
           <FormControl sx={{ display: "block", mt: 5 }}>
             <TextField
-              label="email"
+              label="Email"
               variant="outlined"
               sx={{ width: "100%", color: "textPrimary" }}
               onChange={(e) => props.setUsername(e.target.value)}
@@ -63,7 +66,7 @@ const LoginForm = (props: {
             sx={{ display: "block", color: "textPrimary" }}
           >
             <TextField
-              label="password"
+              label="Password"
               variant="outlined"
               sx={{ width: "100%" }}
               onChange={(e) => props.setPassword(e.target.value)}

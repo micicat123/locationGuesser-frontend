@@ -4,7 +4,6 @@ import { User } from "../models/user";
 import Cookies from "js-cookie";
 import Nav from "./nav";
 import Footer from "./footer";
-import React from "react";
 
 const Wrapper = (props: any) => {
   const [user, setUser] = useState(new User());

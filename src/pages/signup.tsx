@@ -2,7 +2,7 @@ import { SyntheticEvent, useState } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { Box, Grid, ThemeProvider, Typography } from "@mui/material";
-import MUITheme from "../mui/theme";
+import { MUITheme } from "../mui/theme";
 import LoginForm from "../components/forms/login.form";
 import SignupForm from "../components/forms/signup.form";
 
@@ -24,14 +24,13 @@ const Signup = (props: any) => {
     }
 
     try {
-      /*
       await axios.post("/auth/register", {
         username,
         password,
         passwordConfirm,
         firstName,
         lastName,
-      });*/
+      });
 
       if (file != null) {
         await axios.post(`upload/profile_pictures`, formData, {
@@ -84,7 +83,7 @@ const Signup = (props: any) => {
               width: "100%",
             }}
             alt="Backround image."
-            src="/pictures/background.png"
+            src="/pictures/background-logo.png"
           />
         </Grid>
       </Grid>

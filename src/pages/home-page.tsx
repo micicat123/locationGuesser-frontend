@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Wrapper from "../components/wrapper";
+import HomePageHero from "../components/home-page/hero";
 
 const HomePage = () => {
   const [loggedIn, setLoggedin] = useState(false);
@@ -34,7 +35,7 @@ const HomePage = () => {
   //user is not logged in
   return (
     <Wrapper>
-      <h1>not logged in</h1>
+      <HomePageHero />
     </Wrapper>
   );
 };

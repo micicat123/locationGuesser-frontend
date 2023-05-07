@@ -15,7 +15,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { ThemeProvider, css } from "@mui/material/styles";
-import MUITheme from "../mui/theme";
+import { MUITheme, buttonStyle } from "../mui/theme";
 import { User } from "../models/user";
 import { Link } from "@mui/material";
 
@@ -151,7 +151,7 @@ const Nav = (props: { user: User }) => {
                         <Button
                           href="/signup"
                           variant="contained"
-                          sx={{ height: 31, width: 137, fontWeight: 400 }}
+                          sx={buttonStyle}
                         >
                           SIGN UP
                         </Button>
@@ -253,33 +253,44 @@ const Nav = (props: { user: User }) => {
                     flexGrow: 1,
                     display: { xs: "none", md: "flex" },
                     justifyContent: "flex-end",
-                    marginRight: 15,
+                    alignItems: "center",
+                    marginRight: 6.5,
+                    gap: 6.5,
                   }}
                 >
-                  <Button
-                    key={"Home"}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, display: "block" }}
-                  >
-                    {"Home"}
-                  </Button>
-                  <Button
-                    key={"Profile page"}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, display: "block" }}
-                  >
-                    {"Profle page"}
-                  </Button>
-                  <Button
-                    key={"Logout"}
-                    onClick={() => {
-                      handleCloseNavMenu();
-                      logout();
-                    }}
-                    sx={{ my: 2, display: "block" }}
-                  >
-                    {"Logout"}
-                  </Button>
+                  <a href="/" style={{ textDecoration: "none" }}>
+                    <Typography
+                      onClick={handleCloseNavMenu}
+                      variant="body1"
+                      textAlign="center"
+                      color={"textPrimary"}
+                    >
+                      Home
+                    </Typography>
+                  </a>
+                  <a href="/" style={{ textDecoration: "none" }}>
+                    <Typography
+                      onClick={handleCloseNavMenu}
+                      variant="body1"
+                      textAlign="center"
+                      color={"textPrimary"}
+                    >
+                      Profile page
+                    </Typography>
+                  </a>
+                  <a href="/" style={{ textDecoration: "none" }}>
+                    <Typography
+                      onClick={() => {
+                        handleCloseNavMenu();
+                        logout();
+                      }}
+                      variant="body1"
+                      textAlign="center"
+                      color={"textPrimary"}
+                    >
+                      Logout
+                    </Typography>
+                  </a>
                 </Box>
                 <Box sx={{ flexGrow: 0, mr: 2 }}>
                   <Tooltip title="Open settings">

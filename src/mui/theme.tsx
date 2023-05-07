@@ -41,4 +41,10 @@ const MUITheme = createTheme({
   },
 });
 
-export default MUITheme;
+const buttonStyle = {
+  height: 31,
+  width: 137,
+  fontWeight: 400,
+};
+
+export { MUITheme, buttonStyle };

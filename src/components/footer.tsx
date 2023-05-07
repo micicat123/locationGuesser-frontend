@@ -1,5 +1,5 @@
 import { Box, Container, Grid, ThemeProvider, Typography } from "@mui/material";
-import MUITheme from "../mui/theme";
+import { MUITheme } from "../mui/theme";
 
 const Footer = () => {
   return (
