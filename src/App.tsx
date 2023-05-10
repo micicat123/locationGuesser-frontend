@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/signin.";
 import Signup from "./pages/signup";
 import HomePage from "./pages/home-page";
+import AddLocation from "./pages/location/add-location";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route index element={<HomePage />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/add-location" element={<AddLocation />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

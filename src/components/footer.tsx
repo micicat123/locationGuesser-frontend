@@ -14,11 +14,11 @@ const Footer = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          position: "fixed",
+          position: "relative",
           bottom: 0,
         }}
       >
-        <Box sx={{ ml: 4 }}>
+        <Box sx={{ ml: 11 }}>
           <img
             src="/pictures/logo-letters.png"
             alt="logo"
@@ -27,7 +27,7 @@ const Footer = () => {
           />
         </Box>
 
-        <Typography color="white" variant="body1" sx={{ mr: 4 }}>
+        <Typography color="white" variant="body1" sx={{ mr: 11 }}>
           All Rights Reserved | skillupmentor.com
         </Typography>
       </Box>

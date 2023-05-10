@@ -103,6 +103,7 @@ const SignupForm = (props: {
               onChange={(e) => props.setUsername(e.target.value)}
               variant="standard"
               autoComplete="email"
+              required={true}
             />
           </FormControl>
           <br />
@@ -119,6 +120,7 @@ const SignupForm = (props: {
                 color: "textPrimary",
               }}
               autoComplete="first-name"
+              required={true}
             />
             <TextField
               label="Last Name"
@@ -129,6 +131,7 @@ const SignupForm = (props: {
                 color: "textPrimary",
               }}
               autoComplete="last-name"
+              required={true}
             />
           </FormControl>
           <br />
@@ -140,6 +143,7 @@ const SignupForm = (props: {
               type={showPassword ? "text" : "password"}
               variant="standard"
               autoComplete="password"
+              required={true}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -165,6 +169,7 @@ const SignupForm = (props: {
               type={showPassword ? "text" : "password"}
               variant="standard"
               autoComplete="confirm-password"
+              required={true}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

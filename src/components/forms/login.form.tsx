@@ -58,6 +58,7 @@ const LoginForm = (props: {
               sx={{ width: "100%", color: "textPrimary" }}
               onChange={(e) => props.setUsername(e.target.value)}
               autoComplete="email"
+              required={true}
             />
           </FormControl>
           <br />
@@ -72,6 +73,7 @@ const LoginForm = (props: {
               onChange={(e) => props.setPassword(e.target.value)}
               type="password"
               autoComplete="password"
+              required={true}
             />
             <FormHelperText sx={{ color: "red" }}>{props.error}</FormHelperText>
           </FormControl>

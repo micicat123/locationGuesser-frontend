@@ -21,7 +21,6 @@ import { Link } from "@mui/material";
 
 const Nav = (props: { user: User }) => {
   let navigate = useNavigate();
-  const childRef = useRef<any>(null);
   const [image, setImage] = useState<string>(
     "pictures/unset-profile-picture.png"
   );
@@ -34,7 +33,7 @@ const Nav = (props: { user: User }) => {
   );
 
   useEffect(() => {
-    if (props.user.user_id != 0) {
+    if (props.user.picture != "") {
       (async () => {
         try {
           const response = await axios.get(`upload/user`, {
@@ -46,7 +45,7 @@ const Nav = (props: { user: User }) => {
         }
       })();
     }
-  }, []);
+  }, [props.user]);
 
   const logout = async () => {
     await axios.post("/auth/logout");
@@ -82,7 +81,7 @@ const Nav = (props: { user: User }) => {
                   component="a"
                   href="/"
                   sx={{
-                    ml: 2,
+                    ml: 8,
                     display: { xs: "none", md: "flex" },
                     fontFamily: "monospace",
                     fontWeight: 700,
@@ -104,7 +103,7 @@ const Nav = (props: { user: User }) => {
                   component="a"
                   href=""
                   sx={{
-                    mr: 2,
+                    ml: 8,
                     display: { xs: "flex", md: "none" },
                     flexGrow: 1,
                     fontFamily: "monospace",
@@ -121,16 +120,71 @@ const Nav = (props: { user: User }) => {
                     flexGrow: 0,
                     alignItems: "center",
                     marginLeft: "auto",
-                    marginRight: 2,
+                    marginRight: 8,
                   }}
                 >
                   <Tooltip title="Open settings">
                     <>
-                      <div
-                        style={{
-                          display: "flex",
-                          gap: 15,
+                      <Box
+                        sx={{
+                          flexGrow: 1,
+                          display: { xs: "flex", md: "none" },
+                          ml: 8,
+                        }}
+                      >
+                        <IconButton
+                          size="large"
+                          aria-label="account of current user"
+                          aria-controls="menu-appbar"
+                          aria-haspopup="true"
+                          onClick={handleOpenNavMenu}
+                        >
+                          <MenuIcon />
+                        </IconButton>
+                        <Menu
+                          id="menu-appbar"
+                          anchorEl={anchorElNav}
+                          anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "left",
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "left",
+                          }}
+                          open={Boolean(anchorElNav)}
+                          onClose={handleCloseNavMenu}
+                          sx={{
+                            display: { xs: "block", md: "none" },
+                          }}
+                        >
+                          <MenuItem key={"Home"} onClick={() => navigate("/")}>
+                            <Typography textAlign="center">{"Home"}</Typography>
+                          </MenuItem>
+                          <MenuItem
+                            key={"Signup"}
+                            onClick={() => navigate("/signup")}
+                          >
+                            <Typography textAlign="center">
+                              {"Signup"}
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem
+                            key={"Login"}
+                            onClick={() => navigate("/login")}
+                          >
+                            <Typography textAlign="center">
+                              {"Login"}
+                            </Typography>
+                          </MenuItem>
+                        </Menu>
+                      </Box>
+                      <Box
+                        sx={{
+                          gap: 3,
                           alignItems: "center",
+                          display: { xs: "none", md: "flex" },
                         }}
                       >
                         <Link
@@ -155,7 +209,7 @@ const Nav = (props: { user: User }) => {
                         >
                           SIGN UP
                         </Button>
-                      </div>
+                      </Box>
                     </>
                   </Tooltip>
                 </Box>
@@ -173,7 +227,7 @@ const Nav = (props: { user: User }) => {
                   component="a"
                   href="/"
                   sx={{
-                    ml: 2,
+                    ml: 8,
                     display: { xs: "none", md: "flex" },
                     fontFamily: "monospace",
                     fontWeight: 700,
@@ -189,7 +243,13 @@ const Nav = (props: { user: User }) => {
                     width={125}
                   />
                 </Typography>
-                <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: { xs: "flex", md: "none" },
+                    ml: 8,
+                  }}
+                >
                   <IconButton
                     size="large"
                     aria-label="account of current user"
@@ -217,15 +277,18 @@ const Nav = (props: { user: User }) => {
                       display: { xs: "block", md: "none" },
                     }}
                   >
-                    <MenuItem key={"Home"} onClick={handleCloseNavMenu}>
+                    <MenuItem key={"Home"} onClick={() => navigate("/")}>
                       <Typography textAlign="center">{"Home"}</Typography>
                     </MenuItem>
-                    <MenuItem key={"Profile page"} onClick={handleCloseNavMenu}>
+                    <MenuItem
+                      key={"Profile page"}
+                      onClick={() => navigate("/")}
+                    >
                       <Typography textAlign="center">
                         {"Profile page"}
                       </Typography>
                     </MenuItem>
-                    <MenuItem key={"Logout"} onClick={handleCloseNavMenu}>
+                    <MenuItem key={"Logout"} onClick={() => logout()}>
                       <Typography textAlign="center">{"Logout"}</Typography>
                     </MenuItem>
                   </Menu>
@@ -236,7 +299,7 @@ const Nav = (props: { user: User }) => {
                   component="a"
                   href=""
                   sx={{
-                    mr: 2,
+                    mr: 8,
                     display: { xs: "flex", md: "none" },
                     flexGrow: 1,
                     fontFamily: "monospace",
@@ -292,15 +355,12 @@ const Nav = (props: { user: User }) => {
                     </Typography>
                   </a>
                 </Box>
-                <Box sx={{ flexGrow: 0, mr: 2 }}>
+                <Box sx={{ flexGrow: 0, mr: 8 }}>
                   <Tooltip title="Open settings">
                     <>
                       <div style={{ display: "flex", gap: 15 }}>
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                          <Avatar
-                            alt="Remy Sharp"
-                            src="/static/images/avatar/2.jpg"
-                          />
+                          <Avatar src={image} />
                         </IconButton>
                         <img
                           src="/pictures/add-location.png"
