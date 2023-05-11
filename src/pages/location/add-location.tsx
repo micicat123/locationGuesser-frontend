@@ -3,8 +3,9 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { Box, Button, ThemeProvider, Typography } from "@mui/material";
 import { MUITheme } from "../../mui/theme";
-import Wrapper from "../../components/wrapper";
+import Wrapper from "../../components/Wrapper";
 import Cookies from "js-cookie";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const AddLocation = () => {
   const [latitude, setLatitude] = useState(0);
@@ -132,7 +133,7 @@ const AddLocation = () => {
                     setPreviewImage("pictures/placeholder-image.png")
                   }
                 >
-                  X
+                  <ClearIcon />
                 </Button>
               </Box>
             </div>

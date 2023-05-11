@@ -3,7 +3,12 @@ import { MUITheme } from "../../mui/theme";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const PersonalBestCard = (props: { distance: number; id: number }) => {
+const PersonalBestCard = (props: {
+  distance: number;
+  id: number;
+  maxWidth: string;
+  maxHeight: string;
+}) => {
   const [image, setImage] = useState<string>("");
 
   useEffect(() => {
@@ -14,7 +19,7 @@ const PersonalBestCard = (props: { distance: number; id: number }) => {
       setImage(URL.createObjectURL(response.data));
     };
     fetchData();
-  }, []);
+  }, [props]);
 
   return (
     <Box
@@ -23,8 +28,8 @@ const PersonalBestCard = (props: { distance: number; id: number }) => {
         background: MUITheme.palette.gradients.green,
         position: "relative",
         width: "100%",
-        maxWidth: "420px",
-        maxHeight: "236.56px",
+        maxWidth: props.maxWidth,
+        maxHeight: props.maxHeight,
         height: "100%",
       }}
     >

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Wrapper from "../components/wrapper";
+import Wrapper from "../components/Wrapper";
 import HomePageHero from "../components/home-page/hero";
 import LockedLocations from "../components/home-page/locked-locations";
 import Cookies from "js-cookie";
@@ -38,6 +38,7 @@ const HomePage = () => {
     })();
   }, []);
 
+  //get users guesses
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,11 +47,10 @@ const HomePage = () => {
           const response = await axios.get(`/user/best/3/${guessPage}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
-          setBestGuesses((prevBestGuesses) =>
-            [...prevBestGuesses, ...response.data.data].sort(
-              (a, b) => a.errorDistance - b.errorDistance
-            )
-          );
+          setBestGuesses((prevBestGuesses) => [
+            ...prevBestGuesses,
+            ...response.data.data,
+          ]);
           if (response.data.isLastPage) setIsGuessLastPage(true);
         }
       } catch (error) {

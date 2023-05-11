@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { User } from "../models/user";
 import Cookies from "js-cookie";
-import Nav from "./nav";
+import Nav from "./Nav";
 import Footer from "./footer";
 
 const Wrapper = (props: any) => {

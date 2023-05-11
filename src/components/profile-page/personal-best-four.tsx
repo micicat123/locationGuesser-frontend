@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import PersonalBestCard from "../common/personal-best-card";
 
-const PersonalBestGrid3 = (props: {
+const PersonalBestGrid4 = (props: {
   bestGuesses: any[];
   isLastPage: boolean;
   setPage: any;
@@ -9,23 +9,19 @@ const PersonalBestGrid3 = (props: {
 }) => {
   return (
     <>
-      <Typography color="primary" variant="h4" mb="21px">
-        Personal best guesses
-      </Typography>
-      <Typography color="textPrimary" variant="body1" mb="32px">
-        Your personal best guesses appear here. Go on and try to beat your
-        personal records or set a new one!
+      <Typography color="textPrimary" variant="h5" mt="64px" mb="32px">
+        My best guesses
       </Typography>
 
       <Grid container spacing={2}>
         {props.bestGuesses.map((guess) => {
           return (
-            <Grid item xs={12} sm={6} md={4} key={guess.id}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={guess.id}>
               <PersonalBestCard
                 distance={guess.errorDistance}
                 id={guess.location.id}
-                maxWidth="420px"
-                maxHeight="236.56px"
+                maxWidth="309px"
+                maxHeight="175px"
               />
             </Grid>
           );
@@ -49,7 +45,7 @@ const PersonalBestGrid3 = (props: {
               fontWeight: 400,
               fontSize: "16px",
               mt: "32px",
-              mb: "9px",
+              mb: "43px",
             }}
             onClick={() => props.setPage(props.page + 1)}
           >
@@ -61,4 +57,4 @@ const PersonalBestGrid3 = (props: {
   );
 };
 
-export default PersonalBestGrid3;
+export default PersonalBestGrid4;

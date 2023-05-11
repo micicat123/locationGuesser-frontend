@@ -18,6 +18,7 @@ import { ThemeProvider, css } from "@mui/material/styles";
 import { MUITheme, buttonStyle } from "../mui/theme";
 import { User } from "../models/user";
 import { Link } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 const Nav = (props: { user: User }) => {
   let navigate = useNavigate();
@@ -359,9 +360,18 @@ const Nav = (props: { user: User }) => {
                   <Tooltip title="Open settings">
                     <>
                       <div style={{ display: "flex", gap: 15 }}>
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                          <Avatar src={image} />
-                        </IconButton>
+                        <Link
+                          to={"/profile"}
+                          state={{ user: props.user, image: image }}
+                          component={RouterLink}
+                        >
+                          <IconButton
+                            onClick={handleOpenUserMenu}
+                            sx={{ p: 0 }}
+                          >
+                            <Avatar src={image} />
+                          </IconButton>
+                        </Link>
                         <img
                           src="/pictures/add-location.png"
                           alt="add"

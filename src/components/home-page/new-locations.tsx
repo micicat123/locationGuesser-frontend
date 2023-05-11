@@ -13,7 +13,7 @@ const MostRecentLocations = (props: {
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    let fetchData = async () => {
       for (const location of props.recentLocations) {
         try {
           const response = await axios.get(`upload/location/${location.id}`, {
