@@ -281,14 +281,18 @@ const Nav = (props: { user: User }) => {
                     <MenuItem key={"Home"} onClick={() => navigate("/")}>
                       <Typography textAlign="center">{"Home"}</Typography>
                     </MenuItem>
-                    <MenuItem
-                      key={"Profile page"}
-                      onClick={() => navigate("/")}
+                    <Link
+                      to={"/profile"}
+                      state={{ user: props.user, image: image }}
+                      component={RouterLink}
+                      sx={{ textDecoration: "none" }}
                     >
-                      <Typography textAlign="center">
-                        {"Profile page"}
-                      </Typography>
-                    </MenuItem>
+                      <MenuItem key={"Profile page"}>
+                        <Typography textAlign="center">
+                          {"Profile page"}
+                        </Typography>
+                      </MenuItem>
+                    </Link>
                     <MenuItem key={"Logout"} onClick={() => logout()}>
                       <Typography textAlign="center">{"Logout"}</Typography>
                     </MenuItem>
@@ -332,7 +336,12 @@ const Nav = (props: { user: User }) => {
                       Home
                     </Typography>
                   </a>
-                  <a href="/" style={{ textDecoration: "none" }}>
+                  <Link
+                    to={"/profile"}
+                    state={{ user: props.user, image: image }}
+                    component={RouterLink}
+                    sx={{ textDecoration: "none" }}
+                  >
                     <Typography
                       onClick={handleCloseNavMenu}
                       variant="body1"
@@ -341,7 +350,7 @@ const Nav = (props: { user: User }) => {
                     >
                       Profile page
                     </Typography>
-                  </a>
+                  </Link>
                   <a href="/" style={{ textDecoration: "none" }}>
                     <Typography
                       onClick={() => {
@@ -360,23 +369,14 @@ const Nav = (props: { user: User }) => {
                   <Tooltip title="Open settings">
                     <>
                       <div style={{ display: "flex", gap: 15 }}>
-                        <Link
-                          to={"/profile"}
-                          state={{ user: props.user, image: image }}
-                          component={RouterLink}
-                        >
-                          <IconButton
-                            onClick={handleOpenUserMenu}
-                            sx={{ p: 0 }}
-                          >
-                            <Avatar src={image} />
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                          <Avatar src={image} />
+                        </IconButton>
+                        <Link href={"/add-location"} underline="none">
+                          <IconButton sx={{ p: 0 }}>
+                            <Avatar src={"/pictures/add-location.png"} />
                           </IconButton>
                         </Link>
-                        <img
-                          src="/pictures/add-location.png"
-                          alt="add"
-                          width={40}
-                        />
                       </div>
                     </>
                   </Tooltip>

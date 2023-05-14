@@ -1,8 +1,9 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Link, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CreateIcon from "@mui/icons-material/Create";
 import ClearIcon from "@mui/icons-material/Clear";
+import { Link as RouterLink } from "react-router-dom";
 
 const UsersLocations = (props: {
   usersLocations: any[];
@@ -10,23 +11,29 @@ const UsersLocations = (props: {
   setPage: any;
   page: number;
 }) => {
-  const imageUrls = new Set<string>();
-  const [images, setImages] = useState<string[]>([]);
+  const [locations, setLocations] = useState<
+    { imageUrl: any; location: any }[]
+  >([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      const imageData = [];
+
       for (const location of props.usersLocations) {
         try {
           const response = await axios.get(`upload/location/${location.id}`, {
             responseType: "blob",
           });
-          imageUrls.add(URL.createObjectURL(response.data));
+
+          imageData.push({
+            imageUrl: URL.createObjectURL(response.data),
+            location: location,
+          });
         } catch (err) {
           console.log(err);
         }
       }
-      const uniqueImages = Array.from(imageUrls);
-      setImages(uniqueImages);
+      setLocations(imageData);
     };
     fetchData();
   }, [props.usersLocations]);
@@ -38,9 +45,9 @@ const UsersLocations = (props: {
       </Typography>
 
       <Grid container spacing={2}>
-        {images.map((image) => {
+        {locations.map((location, index) => {
           return (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={image}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <Box
                 sx={{
                   position: "relative",
@@ -64,16 +71,22 @@ const UsersLocations = (props: {
                     boxSizing: "border-box",
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    sx={{
-                      height: 40,
-                      maxWidth: 40,
-                      minWidth: 40,
-                    }}
+                  <Link
+                    to={"/edit-location"}
+                    state={{ location: location }}
+                    component={RouterLink}
                   >
-                    <CreateIcon />
-                  </Button>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        height: 40,
+                        maxWidth: 40,
+                        minWidth: 40,
+                      }}
+                    >
+                      <CreateIcon />
+                    </Button>
+                  </Link>
                   <Button
                     variant="contained"
                     sx={{
@@ -99,7 +112,7 @@ const UsersLocations = (props: {
                     position: "relative",
                     boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.15)",
                   }}
-                  src={image}
+                  src={location.imageUrl}
                 />
               </Box>
             </Grid>

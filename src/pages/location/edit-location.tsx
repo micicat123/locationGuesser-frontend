@@ -1,4 +1,4 @@
-import { SyntheticEvent, useRef, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import {
@@ -8,14 +8,13 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
+import { useLocation } from "react-router-dom";
 import { MUITheme, buttonStyle } from "../../mui/theme";
 import Wrapper from "../../components/Wrapper";
 import Cookies from "js-cookie";
-import ClearIcon from "@mui/icons-material/Clear";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import { isEqual } from "lodash";
 
-const AddLocation = () => {
+const EditLocation = () => {
   const [file, setFile] = useState<any | null>(null);
   const [previewImage, setPreviewImage] = useState<string>(
     "pictures/placeholder-image.png"
@@ -24,24 +23,45 @@ const AddLocation = () => {
   const [marker, setMarker] = useState<any>({ lat: -90, lng: 180 });
   const [locationName, setLocationName] = useState("");
   const apiKey = process.env.REACT_APP_API_KEY;
-  const fileInputRef = useRef<any>(null);
+  const locate = useLocation();
 
-  const post = async (e: SyntheticEvent) => {
+  useEffect(() => {
+    setPreviewImage(locate.state.location.imageUrl);
+    const newMarker = {
+      lat: Number(locate.state.location.location.latitude),
+      lng: Number(locate.state.location.location.longitude),
+    };
+    setMarker(newMarker);
+    setLocationName(locate.state.location.location.address);
+  }, []);
+
+  const update = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
-      const response: any = await axios.post(
-        `/location`,
-        { latitude: marker.lat, longitude: marker.lng, address: locationName },
-        { headers: { Authorization: `Bearer ${Cookies.get("jwt")}` } }
-      );
-
-      const formData = new FormData();
-      formData.append("file", file);
-      await axios.post(`upload/locations/${response.data.id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      if (locate.state.location.location.address != locationName) {
+        const response: any = await axios.put(
+          `/location/${locate.state.location.location.id}`,
+          {
+            latitude: marker.lat,
+            longitude: marker.lng,
+            address: locationName,
+          },
+          { headers: { Authorization: `Bearer ${Cookies.get("jwt")}` } }
+        );
+      }
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        await axios.post(
+          `upload/locations/${locate.state.location.location.id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+      }
 
       setRedirect(true);
     } catch (err) {
@@ -51,6 +71,7 @@ const AddLocation = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = (event.target as HTMLInputElement).files?.[0];
+    console.log(file);
     if (file) {
       setFile(file);
       setPreviewImage(URL.createObjectURL(file));
@@ -72,6 +93,8 @@ const AddLocation = () => {
         } else {
           console.log("No results found");
         }
+      } else if (status === "ZERO_RESULTS") {
+        setLocationName("Name for this location is not defined");
       } else {
         console.log(`Geocoder failed due to: ${status}`);
       }
@@ -88,14 +111,14 @@ const AddLocation = () => {
         <Box sx={{ mt: "51px", ml: 10, mr: 10 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Typography color="textPrimary" variant="h4">
-              Add a new
+              Edit
             </Typography>
             <Typography color="primary" variant="h4" ml="0.25em">
               location.
             </Typography>
           </Box>
 
-          <form onSubmit={(e: SyntheticEvent) => post(e)}>
+          <form onSubmit={(e: SyntheticEvent) => update(e)}>
             <img
               src={previewImage}
               alt="upload profile picture"
@@ -134,7 +157,6 @@ const AddLocation = () => {
                     type="file"
                     onChange={handleFileChange}
                     id="upload-file"
-                    ref={fileInputRef}
                     style={{
                       position: "absolute",
                       top: 0,
@@ -143,30 +165,8 @@ const AddLocation = () => {
                       width: "100%",
                       height: "100%",
                     }}
-                    required
                   />
                   UPLOAD IMAGE
-                </Button>
-
-                <Button
-                  variant="contained"
-                  sx={{
-                    height: 40,
-                    maxWidth: 40,
-                    minWidth: 40,
-                    backgroundColor: "#9B6161",
-                    "&:hover": {
-                      backgroundColor: "#6b4545",
-                    },
-                  }}
-                  onClick={() => {
-                    setPreviewImage("pictures/placeholder-image.png");
-                    if (fileInputRef.current) {
-                      fileInputRef.current.value = null;
-                    }
-                  }}
-                >
-                  <ClearIcon />
                 </Button>
               </Box>
             </div>
@@ -180,11 +180,7 @@ const AddLocation = () => {
                       height: "197px",
                       margin: "23px auto 23px auto",
                     }}
-                    center={
-                      isEqual(marker, { lat: -90, lng: 180 })
-                        ? { lat: 0, lng: 0 }
-                        : marker
-                    }
+                    center={marker}
                     zoom={2}
                     options={{
                       disableDefaultUI: true,
@@ -245,7 +241,6 @@ const AddLocation = () => {
                     onChange={(
                       event: React.ChangeEvent<HTMLInputElement>
                     ) => {}}
-                    required
                   />
                   <Box
                     sx={{
@@ -260,7 +255,7 @@ const AddLocation = () => {
                       sx={{ buttonStyle }}
                       type="submit"
                     >
-                      ADD NEW
+                      SAVE
                     </Button>
                   </Box>
                 </Box>
@@ -275,4 +270,4 @@ const AddLocation = () => {
   );
 };
 
-export default AddLocation;
+export default EditLocation;

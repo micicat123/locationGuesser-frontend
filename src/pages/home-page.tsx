@@ -11,6 +11,8 @@ import MostRecentLocations from "../components/home-page/new-locations";
 
 const HomePage = () => {
   const [loggedIn, setLoggedin] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
   const [loading, setLoading] = useState(true);
   const [imageIds, setImageIds] = useState<number[]>([]);
 
@@ -35,6 +37,7 @@ const HomePage = () => {
         if (response.message === "This user is an admin") admin = true;
       } catch (err) {}
       setLoading(false);
+      setIsMounted(true);
     })();
   }, []);
 
@@ -65,16 +68,18 @@ const HomePage = () => {
     const fetchData = async () => {
       try {
         //get most recent locations
-        const responseLocation = await axios.get(`/location/${locationPage}`);
-        if (responseLocation.data.isLastPage) setIsLocationLastPage(true);
-        setRecentLocations(responseLocation.data.data);
+        if (isMounted) {
+          const responseLocation = await axios.get(`/location/${locationPage}`);
+          if (responseLocation.data.isLastPage) setIsLocationLastPage(true);
+          setRecentLocations(responseLocation.data.data);
 
-        const newImageKeys = [
-          responseLocation.data.data[0].id,
-          responseLocation.data.data[1].id,
-          responseLocation.data.data[2].id,
-        ];
-        setImageIds(newImageKeys);
+          const newImageKeys = [
+            responseLocation.data.data[0].id,
+            responseLocation.data.data[1].id,
+            responseLocation.data.data[2].id,
+          ];
+          setImageIds(newImageKeys);
+        }
       } catch (error) {}
     };
 

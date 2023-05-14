@@ -9,7 +9,6 @@ const MostRecentLocations = (props: {
   setPage: any;
   page: number;
 }) => {
-  const imageUrls = new Set<string>();
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -19,13 +18,14 @@ const MostRecentLocations = (props: {
           const response = await axios.get(`upload/location/${location.id}`, {
             responseType: "blob",
           });
-          imageUrls.add(URL.createObjectURL(response.data));
+          setImages((prevImages) => [
+            ...prevImages,
+            URL.createObjectURL(response.data),
+          ]);
         } catch (err) {
           console.log(err);
         }
       }
-      const uniqueImages = Array.from(imageUrls);
-      setImages(uniqueImages);
     };
     fetchData();
   }, [props.recentLocations]);
