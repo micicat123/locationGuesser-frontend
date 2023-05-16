@@ -1,15 +1,23 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import PersonalBestCard from "../common/personal-best-card";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+import logAction from "../common/log-action";
 
 const MostRecentLocations = (props: {
   recentLocations: any[];
   isLastPage: boolean;
   setPage: any;
   page: number;
+  user_id: number;
+  allGuesses: number[];
 }) => {
-  const [images, setImages] = useState<string[]>([]);
+  interface ImageInfo {
+    location: any;
+    imageUrl: string;
+  }
+  const [locations, setLocations] = useState<ImageInfo[]>([]);
 
   useEffect(() => {
     let fetchData = async () => {
@@ -18,9 +26,12 @@ const MostRecentLocations = (props: {
           const response = await axios.get(`upload/location/${location.id}`, {
             responseType: "blob",
           });
-          setImages((prevImages) => [
+          setLocations((prevImages) => [
             ...prevImages,
-            URL.createObjectURL(response.data),
+            {
+              location: location,
+              imageUrl: URL.createObjectURL(response.data),
+            },
           ]);
         } catch (err) {
           console.log(err);
@@ -40,24 +51,41 @@ const MostRecentLocations = (props: {
         picture.
       </Typography>
       <Grid container spacing={2}>
-        {images.map((image) => {
+        {locations.map((location) => {
+          if (props.allGuesses.includes(location.location.id)) {
+            return null;
+          }
           return (
-            <Grid item xs={12} sm={6} md={4} key={image}>
-              <Box
-                component="img"
-                sx={{
-                  borderRadius: "4px",
-                  width: "100%",
-                  height: "100%",
-                  maxWidth: "420px",
-                  maxHeight: "236.56px",
-                  objectFit: "cover",
-                  zIndex: -1,
-                  position: "relative",
-                  boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.15)",
+            <Grid item xs={12} sm={6} md={4} key={location.imageUrl}>
+              <Link
+                to={"/guess-location"}
+                state={{ location: location, user: props.user_id }}
+                component={RouterLink}
+                sx={{ textDecoration: "none" }}
+                onClick={() => {
+                  logAction(
+                    "click",
+                    "link",
+                    "link-guess-location",
+                    window.location.pathname
+                  );
                 }}
-                src={image}
-              />
+              >
+                <Box
+                  component="img"
+                  sx={{
+                    borderRadius: "4px",
+                    width: "100%",
+                    height: "100%",
+                    maxWidth: "420px",
+                    maxHeight: "236.56px",
+                    objectFit: "cover",
+                    position: "relative",
+                    boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.15)",
+                  }}
+                  src={location.imageUrl}
+                />
+              </Link>
             </Grid>
           );
         })}
@@ -82,7 +110,15 @@ const MostRecentLocations = (props: {
               mt: "32px",
               mb: "24px",
             }}
-            onClick={() => props.setPage(props.page + 1)}
+            onClick={() => {
+              props.setPage(props.page + 1);
+              logAction(
+                "click",
+                "button",
+                "load more",
+                window.location.pathname
+              );
+            }}
           >
             LOAD MORE
           </Button>

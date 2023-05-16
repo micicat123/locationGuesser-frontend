@@ -9,12 +9,6 @@ import Wrapper from "../components/Wrapper";
 import PersonalBestGrid4 from "../components/profile-page/personal-best-four";
 import UsersLocations from "../components/profile-page/users-locations";
 
-/*
-   <Link to={'/profile'} state={{ user: props.user }}>
-      <img src={image} alt="profile" width="43" height="43" className="uploaded-profile-image"/>
-   </Link>
-*/
-
 const ProfilePage = () => {
   const [user, setUser] = useState<any>(new User());
 
@@ -39,9 +33,12 @@ const ProfilePage = () => {
     const fetchData = async () => {
       if (image == "pictures/unset-profile-picture.png") {
         try {
-          const response = await axios.get(`upload/user`, {
-            responseType: "blob",
-          });
+          const response = await axios.get(
+            `upload/user/${location.state.user.user_id}`,
+            {
+              responseType: "blob",
+            }
+          );
           setImage(URL.createObjectURL(response.data));
         } catch (err) {
           console.log(err);

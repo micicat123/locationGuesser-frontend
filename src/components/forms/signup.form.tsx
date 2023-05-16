@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { SyntheticEvent, useState } from "react";
+import logAction from "../common/log-action";
 
 const SignupForm = (props: {
   setUsername: Function;
@@ -192,6 +193,9 @@ const SignupForm = (props: {
             variant="contained"
             sx={{ height: 39, width: "100%", fontWeight: 400 }}
             type="submit"
+            onClick={() => {
+              logAction("click", "button", "sign-in", window.location.pathname);
+            }}
           >
             SIGN UP
           </Button>
@@ -206,7 +210,18 @@ const SignupForm = (props: {
             <Typography variant="body1" color={"textPrimary"}>
               Already have an account?
             </Typography>
-            <Typography variant="body1" color={"primary"}>
+            <Typography
+              variant="body1"
+              color={"primary"}
+              onClick={() => {
+                logAction(
+                  "click",
+                  "link",
+                  "link-login",
+                  window.location.pathname
+                );
+              }}
+            >
               <Link href={"/login"} underline="none" sx={{ fontWeight: 500 }}>
                 Sign in
               </Link>

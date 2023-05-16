@@ -4,6 +4,7 @@ import axios from "axios";
 import CreateIcon from "@mui/icons-material/Create";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Link as RouterLink } from "react-router-dom";
+import logAction from "../common/log-action";
 
 const UsersLocations = (props: {
   usersLocations: any[];
@@ -75,6 +76,14 @@ const UsersLocations = (props: {
                     to={"/edit-location"}
                     state={{ location: location }}
                     component={RouterLink}
+                    onClick={() => {
+                      logAction(
+                        "click",
+                        "button",
+                        "edit-location",
+                        window.location.pathname
+                      );
+                    }}
                   >
                     <Button
                       variant="contained"
@@ -97,6 +106,14 @@ const UsersLocations = (props: {
                       "&:hover": {
                         backgroundColor: "#6b4545",
                       },
+                    }}
+                    onClick={() => {
+                      logAction(
+                        "click",
+                        "button",
+                        "remove-location",
+                        window.location.pathname
+                      );
                     }}
                   >
                     <ClearIcon />
@@ -139,7 +156,15 @@ const UsersLocations = (props: {
               mt: "32px",
               mb: "24px",
             }}
-            onClick={() => props.setPage(props.page + 1)}
+            onClick={() => {
+              props.setPage(props.page + 1);
+              logAction(
+                "click",
+                "button",
+                "load more",
+                window.location.pathname
+              );
+            }}
           >
             LOAD MORE
           </Button>

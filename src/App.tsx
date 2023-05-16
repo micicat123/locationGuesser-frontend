@@ -7,6 +7,7 @@ import HomePage from "./pages/home-page";
 import AddLocation from "./pages/location/add-location";
 import ProfilePage from "./pages/profile-page";
 import EditLocation from "./pages/location/edit-location";
+import GuessLocation from "./pages/location/guess-location";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />}></Route>
           <Route path="/add-location" element={<AddLocation />}></Route>
           <Route path="/edit-location" element={<EditLocation />}></Route>
+          <Route path="/guess-location" element={<GuessLocation />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

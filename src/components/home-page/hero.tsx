@@ -8,6 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { MUITheme, buttonStyle } from "../../mui/theme";
+import logAction from "../common/log-action";
 
 const HomePageHero = () => {
   const theme = useTheme();
@@ -51,7 +52,14 @@ const HomePageHero = () => {
           Geotagger is website that allows you to post picture and tag it on the
           map. Other user than try to locate it via Google Maps.
         </Typography>
-        <Button href="/signup" variant="contained" sx={buttonStyle}>
+        <Button
+          href="/signup"
+          variant="contained"
+          sx={buttonStyle}
+          onClick={() => {
+            logAction("click", "button", "signup", window.location.pathname);
+          }}
+        >
           SIGN UP
         </Button>
       </Box>

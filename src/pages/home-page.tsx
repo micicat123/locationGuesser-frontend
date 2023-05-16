@@ -12,6 +12,7 @@ import MostRecentLocations from "../components/home-page/new-locations";
 const HomePage = () => {
   const [loggedIn, setLoggedin] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [userId, setUserId] = useState<number>(0);
 
   const [loading, setLoading] = useState(true);
   const [imageIds, setImageIds] = useState<number[]>([]);
@@ -21,6 +22,7 @@ const HomePage = () => {
 
   const [recentLocations, setRecentLocations] = useState<any[]>([]);
   const [bestGuesses, setBestGuesses] = useState<any[]>([]);
+  const [allGuesses, setAllGuesses] = useState<any[]>([]);
 
   const [isGuessLastPage, setIsGuessLastPage] = useState(false);
   const [isLocationLastPage, setIsLocationLastPage] = useState(false);
@@ -32,6 +34,7 @@ const HomePage = () => {
       try {
         //check for user status
         const response = (await axios.get("/auth/admin")).data.body;
+        if (response.user.id) setUserId(response.user.id);
         if (response.message !== "This user is not logged in")
           setLoggedin(true);
         if (response.message === "This user is an admin") admin = true;
@@ -55,6 +58,13 @@ const HomePage = () => {
             ...response.data.data,
           ]);
           if (response.data.isLastPage) setIsGuessLastPage(true);
+
+          const guesses = await axios.get(`/user/guesses`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          for (const guess of guesses.data) {
+            setAllGuesses((oldIds) => [...oldIds, guess.location.id]);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -84,7 +94,7 @@ const HomePage = () => {
     };
 
     fetchData();
-  }, [locationPage, loggedIn]);
+  }, [locationPage, isMounted]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -106,6 +116,8 @@ const HomePage = () => {
               isLastPage={isLocationLastPage}
               setPage={setLocationPage}
               page={locationPage}
+              user_id={userId}
+              allGuesses={allGuesses}
             />
           </Box>
         </ThemeProvider>

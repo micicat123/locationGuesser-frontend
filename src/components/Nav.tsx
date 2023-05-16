@@ -19,6 +19,7 @@ import { MUITheme, buttonStyle } from "../mui/theme";
 import { User } from "../models/user";
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import logAction from "./common/log-action";
 
 const Nav = (props: { user: User }) => {
   let navigate = useNavigate();
@@ -37,9 +38,12 @@ const Nav = (props: { user: User }) => {
     if (props.user.picture != "") {
       (async () => {
         try {
-          const response = await axios.get(`upload/user`, {
-            responseType: "blob",
-          });
+          const response = await axios.get(
+            `upload/user/${props.user.user_id}`,
+            {
+              responseType: "blob",
+            }
+          );
           setImage(URL.createObjectURL(response.data));
         } catch (err) {
           console.log(err);
@@ -160,20 +164,49 @@ const Nav = (props: { user: User }) => {
                             display: { xs: "block", md: "none" },
                           }}
                         >
-                          <MenuItem key={"Home"} onClick={() => navigate("/")}>
+                          <MenuItem
+                            key={"Home"}
+                            onClick={() => {
+                              navigate("/");
+                              logAction(
+                                "click",
+                                "link",
+                                "link-home",
+                                window.location.pathname
+                              );
+                            }}
+                          >
                             <Typography textAlign="center">{"Home"}</Typography>
                           </MenuItem>
+
                           <MenuItem
                             key={"Signup"}
-                            onClick={() => navigate("/signup")}
+                            onClick={() => {
+                              navigate("/signup");
+                              logAction(
+                                "click",
+                                "link",
+                                "link-signup",
+                                window.location.pathname
+                              );
+                            }}
                           >
                             <Typography textAlign="center">
                               {"Signup"}
                             </Typography>
                           </MenuItem>
+
                           <MenuItem
                             key={"Login"}
-                            onClick={() => navigate("/login")}
+                            onClick={() => {
+                              navigate("/login");
+                              logAction(
+                                "click",
+                                "link",
+                                "link-login",
+                                window.location.pathname
+                              );
+                            }}
                           >
                             <Typography textAlign="center">
                               {"Login"}
@@ -193,6 +226,14 @@ const Nav = (props: { user: User }) => {
                           underline="none"
                           sx={{ fontWeight: 500 }}
                           color="textPrimary"
+                          onClick={() => {
+                            logAction(
+                              "click",
+                              "link",
+                              "link-login",
+                              window.location.pathname
+                            );
+                          }}
                         >
                           Sign in
                         </Link>
@@ -206,6 +247,14 @@ const Nav = (props: { user: User }) => {
                         <Button
                           href="/signup"
                           variant="contained"
+                          onClick={() => {
+                            logAction(
+                              "click",
+                              "button",
+                              "link-signup",
+                              window.location.pathname
+                            );
+                          }}
                           sx={buttonStyle}
                         >
                           SIGN UP
@@ -278,13 +327,32 @@ const Nav = (props: { user: User }) => {
                       display: { xs: "block", md: "none" },
                     }}
                   >
-                    <MenuItem key={"Home"} onClick={() => navigate("/")}>
+                    <MenuItem
+                      key={"Home"}
+                      onClick={() => {
+                        navigate("/");
+                        logAction(
+                          "click",
+                          "link-home",
+                          null,
+                          window.location.pathname
+                        );
+                      }}
+                    >
                       <Typography textAlign="center">{"Home"}</Typography>
                     </MenuItem>
                     <Link
                       to={"/profile"}
                       state={{ user: props.user, image: image }}
                       component={RouterLink}
+                      onClick={() => {
+                        logAction(
+                          "click",
+                          "link",
+                          "link-profile",
+                          window.location.pathname
+                        );
+                      }}
                       sx={{ textDecoration: "none" }}
                     >
                       <MenuItem key={"Profile page"}>
@@ -293,7 +361,18 @@ const Nav = (props: { user: User }) => {
                         </Typography>
                       </MenuItem>
                     </Link>
-                    <MenuItem key={"Logout"} onClick={() => logout()}>
+                    <MenuItem
+                      key={"Logout"}
+                      onClick={() => {
+                        logout();
+                        logAction(
+                          "click",
+                          "link",
+                          "logout",
+                          window.location.pathname
+                        );
+                      }}
+                    >
                       <Typography textAlign="center">{"Logout"}</Typography>
                     </MenuItem>
                   </Menu>
@@ -328,7 +407,15 @@ const Nav = (props: { user: User }) => {
                 >
                   <a href="/" style={{ textDecoration: "none" }}>
                     <Typography
-                      onClick={handleCloseNavMenu}
+                      onClick={() => {
+                        handleCloseNavMenu();
+                        logAction(
+                          "click",
+                          "link",
+                          "link-home",
+                          window.location.pathname
+                        );
+                      }}
                       variant="body1"
                       textAlign="center"
                       color={"textPrimary"}
@@ -343,7 +430,9 @@ const Nav = (props: { user: User }) => {
                     sx={{ textDecoration: "none" }}
                   >
                     <Typography
-                      onClick={handleCloseNavMenu}
+                      onClick={() => {
+                        handleCloseNavMenu();
+                      }}
                       variant="body1"
                       textAlign="center"
                       color={"textPrimary"}
@@ -356,6 +445,12 @@ const Nav = (props: { user: User }) => {
                       onClick={() => {
                         handleCloseNavMenu();
                         logout();
+                        logAction(
+                          "click",
+                          "link",
+                          "link-home",
+                          window.location.pathname
+                        );
                       }}
                       variant="body1"
                       textAlign="center"
@@ -372,7 +467,18 @@ const Nav = (props: { user: User }) => {
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                           <Avatar src={image} />
                         </IconButton>
-                        <Link href={"/add-location"} underline="none">
+                        <Link
+                          href={"/add-location"}
+                          underline="none"
+                          onClick={() => {
+                            logAction(
+                              "click",
+                              "link",
+                              "link-add-location",
+                              window.location.pathname
+                            );
+                          }}
+                        >
                           <IconButton sx={{ p: 0 }}>
                             <Avatar src={"/pictures/add-location.png"} />
                           </IconButton>

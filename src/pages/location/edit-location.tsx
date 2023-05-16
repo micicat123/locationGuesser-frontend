@@ -13,6 +13,11 @@ import { MUITheme, buttonStyle } from "../../mui/theme";
 import Wrapper from "../../components/Wrapper";
 import Cookies from "js-cookie";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import {
+  MapOptions,
+  handleClick,
+} from "../../components/common/map-options-setMarker";
+import logAction from "../../components/common/log-action";
 
 const EditLocation = () => {
   const [file, setFile] = useState<any | null>(null);
@@ -78,29 +83,6 @@ const EditLocation = () => {
     }
   };
 
-  const handleClick = (event: any) => {
-    const newMarker = {
-      lat: event.latLng.lat(),
-      lng: event.latLng.lng(),
-    };
-    setMarker(newMarker);
-
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ location: newMarker }, (results: any, status) => {
-      if (status === "OK") {
-        if (results[0]) {
-          setLocationName(results[0].formatted_address);
-        } else {
-          console.log("No results found");
-        }
-      } else if (status === "ZERO_RESULTS") {
-        setLocationName("Name for this location is not defined");
-      } else {
-        console.log(`Geocoder failed due to: ${status}`);
-      }
-    });
-  };
-
   if (redirect) {
     return <Navigate to={"/"} />;
   }
@@ -111,10 +93,10 @@ const EditLocation = () => {
         <Box sx={{ mt: "51px", ml: 10, mr: 10 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Typography color="textPrimary" variant="h4">
-              Edit
-            </Typography>
-            <Typography color="primary" variant="h4" ml="0.25em">
-              location.
+              Edit{" "}
+              <span style={{ color: MUITheme.palette.primary.main }}>
+                location.
+              </span>
             </Typography>
           </Box>
 
@@ -152,6 +134,14 @@ const EditLocation = () => {
                     fontWeight: 400,
                     position: "relative",
                   }}
+                  onClick={() => {
+                    logAction(
+                      "click",
+                      "button",
+                      "upload-image",
+                      window.location.pathname
+                    );
+                  }}
                 >
                   <input
                     type="file"
@@ -174,7 +164,7 @@ const EditLocation = () => {
               <>
                 <LoadScript googleMapsApiKey={apiKey}>
                   <GoogleMap
-                    onClick={handleClick}
+                    onClick={(e) => handleClick(e, setMarker, setLocationName)}
                     mapContainerStyle={{
                       width: "860px",
                       height: "197px",
@@ -182,41 +172,7 @@ const EditLocation = () => {
                     }}
                     center={marker}
                     zoom={2}
-                    options={{
-                      disableDefaultUI: true,
-                      styles: [
-                        {
-                          featureType: "poi",
-                          elementType: "labels",
-                          stylers: [{ visibility: "off" }],
-                        },
-                        {
-                          featureType: "transit",
-                          elementType: "labels",
-                          stylers: [{ visibility: "off" }],
-                        },
-                        {
-                          featureType: "road",
-                          elementType: "labels.text.fill",
-                          stylers: [{ visibility: "off" }],
-                        },
-                        {
-                          featureType: "road.highway",
-                          elementType: "geometry.fill",
-                          stylers: [{ color: "#FFA25C" }],
-                        },
-                        {
-                          featureType: "water",
-                          elementType: "geometry.fill",
-                          stylers: [{ color: "#75CFF0" }],
-                        },
-                        {
-                          featureType: "landscape.natural",
-                          elementType: "geometry.fill",
-                          stylers: [{ color: "#B6E59E" }],
-                        },
-                      ],
-                    }}
+                    options={MapOptions}
                   >
                     <Marker position={marker} />
                   </GoogleMap>
@@ -254,6 +210,14 @@ const EditLocation = () => {
                       variant="contained"
                       sx={{ buttonStyle }}
                       type="submit"
+                      onClick={() => {
+                        logAction(
+                          "click",
+                          "button",
+                          "save-edited-location",
+                          window.location.pathname
+                        );
+                      }}
                     >
                       SAVE
                     </Button>

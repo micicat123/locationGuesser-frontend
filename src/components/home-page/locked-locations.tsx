@@ -9,6 +9,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { MUITheme, buttonStyle, lockIconStyle } from "../../mui/theme";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import logAction from "../common/log-action";
 
 const LockedLocations = (props: any) => {
   const theme = useTheme();
@@ -142,6 +143,9 @@ const LockedLocations = (props: any) => {
           href="/signup"
           variant="contained"
           sx={{ ...buttonStyle, marginBottom: "107px" }}
+          onClick={() => {
+            logAction("click", "button", "signup", window.location.pathname);
+          }}
         >
           SIGN UP
         </Button>

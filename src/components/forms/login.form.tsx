@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import logAction from "../common/log-action";
 
 const LoginForm = (props: {
   setPassword: Function;
@@ -82,6 +83,9 @@ const LoginForm = (props: {
             variant="contained"
             sx={{ height: 39, width: "100%", fontWeight: 400 }}
             type="submit"
+            onClick={() => {
+              logAction("click", "button", "sign-in", window.location.pathname);
+            }}
           >
             SIGN IN
           </Button>
@@ -96,7 +100,18 @@ const LoginForm = (props: {
             <Typography variant="body1" color={"textPrimary"}>
               Do you want to create an account?
             </Typography>
-            <Typography variant="body1" color={"primary"}>
+            <Typography
+              variant="body1"
+              color={"primary"}
+              onClick={() => {
+                logAction(
+                  "click",
+                  "link",
+                  "link-signup",
+                  window.location.pathname
+                );
+              }}
+            >
               <Link href={"/signup"} underline="none" sx={{ fontWeight: 500 }}>
                 Sign up
               </Link>

@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 import PersonalBestCard from "../common/personal-best-card";
+import logAction from "../common/log-action";
 
 const PersonalBestGrid4 = (props: {
   bestGuesses: any[];
@@ -47,7 +48,15 @@ const PersonalBestGrid4 = (props: {
               mt: "32px",
               mb: "43px",
             }}
-            onClick={() => props.setPage(props.page + 1)}
+            onClick={() => {
+              props.setPage(props.page + 1);
+              logAction(
+                "click",
+                "button",
+                "load more",
+                window.location.pathname
+              );
+            }}
           >
             LOAD MORE
           </Button>

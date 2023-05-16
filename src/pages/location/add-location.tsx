@@ -14,6 +14,11 @@ import Cookies from "js-cookie";
 import ClearIcon from "@mui/icons-material/Clear";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { isEqual } from "lodash";
+import {
+  MapOptions,
+  handleClick,
+} from "../../components/common/map-options-setMarker";
+import logAction from "../../components/common/log-action";
 
 const AddLocation = () => {
   const [file, setFile] = useState<any | null>(null);
@@ -57,27 +62,6 @@ const AddLocation = () => {
     }
   };
 
-  const handleClick = (event: any) => {
-    const newMarker = {
-      lat: event.latLng.lat(),
-      lng: event.latLng.lng(),
-    };
-    setMarker(newMarker);
-
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ location: newMarker }, (results: any, status) => {
-      if (status === "OK") {
-        if (results[0]) {
-          setLocationName(results[0].formatted_address);
-        } else {
-          console.log("No results found");
-        }
-      } else {
-        console.log(`Geocoder failed due to: ${status}`);
-      }
-    });
-  };
-
   if (redirect) {
     return <Navigate to={"/"} />;
   }
@@ -88,17 +72,16 @@ const AddLocation = () => {
         <Box sx={{ mt: "51px", ml: 10, mr: 10 }}>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Typography color="textPrimary" variant="h4">
-              Add a new
-            </Typography>
-            <Typography color="primary" variant="h4" ml="0.25em">
-              location.
+              Add a new{" "}
+              <span style={{ color: MUITheme.palette.primary.main }}>
+                location.
+              </span>
             </Typography>
           </Box>
 
           <form onSubmit={(e: SyntheticEvent) => post(e)}>
             <img
               src={previewImage}
-              alt="upload profile picture"
               width={860}
               height={280}
               style={{
@@ -128,6 +111,14 @@ const AddLocation = () => {
                     width: 200,
                     fontWeight: 400,
                     position: "relative",
+                  }}
+                  onClick={() => {
+                    logAction(
+                      "click",
+                      "button",
+                      "upload-image",
+                      window.location.pathname
+                    );
                   }}
                 >
                   <input
@@ -164,6 +155,12 @@ const AddLocation = () => {
                     if (fileInputRef.current) {
                       fileInputRef.current.value = null;
                     }
+                    logAction(
+                      "click",
+                      "button",
+                      "clear-image",
+                      window.location.pathname
+                    );
                   }}
                 >
                   <ClearIcon />
@@ -174,7 +171,7 @@ const AddLocation = () => {
               <>
                 <LoadScript googleMapsApiKey={apiKey}>
                   <GoogleMap
-                    onClick={handleClick}
+                    onClick={(e) => handleClick(e, setMarker, setLocationName)}
                     mapContainerStyle={{
                       width: "860px",
                       height: "197px",
@@ -186,41 +183,7 @@ const AddLocation = () => {
                         : marker
                     }
                     zoom={2}
-                    options={{
-                      disableDefaultUI: true,
-                      styles: [
-                        {
-                          featureType: "poi",
-                          elementType: "labels",
-                          stylers: [{ visibility: "off" }],
-                        },
-                        {
-                          featureType: "transit",
-                          elementType: "labels",
-                          stylers: [{ visibility: "off" }],
-                        },
-                        {
-                          featureType: "road",
-                          elementType: "labels.text.fill",
-                          stylers: [{ visibility: "off" }],
-                        },
-                        {
-                          featureType: "road.highway",
-                          elementType: "geometry.fill",
-                          stylers: [{ color: "#FFA25C" }],
-                        },
-                        {
-                          featureType: "water",
-                          elementType: "geometry.fill",
-                          stylers: [{ color: "#75CFF0" }],
-                        },
-                        {
-                          featureType: "landscape.natural",
-                          elementType: "geometry.fill",
-                          stylers: [{ color: "#B6E59E" }],
-                        },
-                      ],
-                    }}
+                    options={MapOptions}
                   >
                     <Marker position={marker} />
                   </GoogleMap>
@@ -259,6 +222,14 @@ const AddLocation = () => {
                       variant="contained"
                       sx={{ buttonStyle }}
                       type="submit"
+                      onClick={() => {
+                        logAction(
+                          "click",
+                          "button",
+                          "add-location",
+                          window.location.pathname
+                        );
+                      }}
                     >
                       ADD NEW
                     </Button>
