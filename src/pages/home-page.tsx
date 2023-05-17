@@ -4,8 +4,8 @@ import Wrapper from "../components/Wrapper";
 import HomePageHero from "../components/home-page/hero";
 import LockedLocations from "../components/home-page/locked-locations";
 import Cookies from "js-cookie";
-import { Box, ThemeProvider } from "@mui/material";
-import { MUITheme } from "../mui/theme";
+import { Box, Button, ThemeProvider } from "@mui/material";
+import { MUITheme, buttonStyle } from "../mui/theme";
 import PersonalBestGrid3 from "../components/home-page/personal-best-three";
 import MostRecentLocations from "../components/home-page/new-locations";
 
@@ -13,6 +13,7 @@ const HomePage = () => {
   const [loggedIn, setLoggedin] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [userId, setUserId] = useState<number>(0);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [imageIds, setImageIds] = useState<number[]>([]);
@@ -37,7 +38,7 @@ const HomePage = () => {
         if (response.user.id) setUserId(response.user.id);
         if (response.message !== "This user is not logged in")
           setLoggedin(true);
-        if (response.message === "This user is an admin") admin = true;
+        if (response.message === "This user is an admin") setIsAdmin(true);
       } catch (err) {}
       setLoading(false);
       setIsMounted(true);
@@ -104,13 +105,32 @@ const HomePage = () => {
     return (
       <Wrapper>
         <ThemeProvider theme={MUITheme}>
+          {isAdmin && (
+            <Box
+              sx={{
+                mt: 11,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                href="/admin"
+                variant="contained"
+                sx={{ ...buttonStyle, height: 50, width: 210 }}
+              >
+                SHOW LOGS
+              </Button>
+            </Box>
+          )}
           <Box mt="83px" ml={11} mr={11}>
-            <PersonalBestGrid3
-              bestGuesses={bestGuesses}
-              isLastPage={isGuessLastPage}
-              setPage={setGuessPage}
-              page={guessPage}
-            />
+            {bestGuesses.length > 0 && (
+              <PersonalBestGrid3
+                bestGuesses={bestGuesses}
+                isLastPage={isGuessLastPage}
+                setPage={setGuessPage}
+                page={guessPage}
+              />
+            )}
             <MostRecentLocations
               recentLocations={recentLocations}
               isLastPage={isLocationLastPage}

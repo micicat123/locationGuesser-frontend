@@ -39,7 +39,6 @@ const Signup = (props: any) => {
           },
         });
       }
-
       setRedirect(true);
     } catch (err: any) {
       if (typeof err.response.data.message === "object")
@@ -48,6 +47,7 @@ const Signup = (props: any) => {
     }
   };
 
+  console.log(redirect);
   if (redirect) {
     return <Navigate to={"/login"} />;
   }

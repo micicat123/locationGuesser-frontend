@@ -11,6 +11,7 @@ import UsersLocations from "../components/profile-page/users-locations";
 
 const ProfilePage = () => {
   const [user, setUser] = useState<any>(new User());
+  const [isMounted, setIsMounted] = useState(false);
 
   const [bestGuesses, setBestGuesses] = useState<any[]>([]);
   const [guessPage, setGuessPage] = useState(1);
@@ -31,7 +32,7 @@ const ProfilePage = () => {
     setUser(location.state.user);
 
     const fetchData = async () => {
-      if (image == "pictures/unset-profile-picture.png") {
+      if (user.image) {
         try {
           const response = await axios.get(
             `upload/user/${location.state.user.user_id}`,
@@ -51,39 +52,32 @@ const ProfilePage = () => {
   //best guesses
   useEffect(() => {
     const fetchData = async () => {
-      if (image != "pictures/unset-profile-picture.png") {
-        const response = await axios.get(`/user/best/4/${guessPage}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setBestGuesses((prevBestGuesses) => [
-          ...prevBestGuesses,
-          ...response.data.data,
-        ]);
-        if (response.data.isLastPage) setIsGuessLastPage(true);
-      }
+      const response = await axios.get(`/user/best/4/${guessPage}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setBestGuesses((prevBestGuesses) => [
+        ...prevBestGuesses,
+        ...response.data.data,
+      ]);
+      if (response.data.isLastPage) setIsGuessLastPage(true);
     };
     fetchData();
-  }, [image, guessPage]);
+  }, [isMounted, guessPage]);
 
   //users locations
   useEffect(() => {
     const fetchData = async () => {
-      if (image != "pictures/unset-profile-picture.png") {
-        const response = await axios.get(
-          `/location/user/${usersLocationsPage}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setUsersLocations((prevUsersLocations) => [
-          ...prevUsersLocations,
-          ...response.data.data,
-        ]);
-        if (response.data.isLastPage) setIsUsersLocationsLastPage(true);
-      }
+      const response = await axios.get(`/location/user/${usersLocationsPage}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUsersLocations((prevUsersLocations) => [
+        ...prevUsersLocations,
+        ...response.data.data,
+      ]);
+      if (response.data.isLastPage) setIsUsersLocationsLastPage(true);
     };
     fetchData();
-  }, [image, usersLocationsPage]);
+  }, [isMounted, usersLocationsPage]);
 
   return (
     <Wrapper>
@@ -101,18 +95,46 @@ const ProfilePage = () => {
               {user.first_name} {user.last_name}
             </Typography>
           </Box>
-          <PersonalBestGrid4
-            bestGuesses={bestGuesses}
-            isLastPage={isGuessLastPage}
-            setPage={setGuessPage}
-            page={guessPage}
-          />
-          <UsersLocations
-            usersLocations={usersLocations}
-            isLastPage={isUsersLocationsLastPage}
-            setPage={setUsersLocationsPage}
-            page={usersLocationsPage}
-          />
+          {bestGuesses.length > 0 && (
+            <PersonalBestGrid4
+              bestGuesses={bestGuesses}
+              isLastPage={isGuessLastPage}
+              setPage={setGuessPage}
+              page={guessPage}
+            />
+          )}
+          {usersLocations.length > 0 && (
+            <UsersLocations
+              usersLocations={usersLocations}
+              isLastPage={isUsersLocationsLastPage}
+              setPage={setUsersLocationsPage}
+              page={usersLocationsPage}
+            />
+          )}
+
+          {bestGuesses.length < 1 && usersLocations.length < 1 && (
+            <Box
+              sx={{
+                mt: 10,
+                mb: 75,
+              }}
+            >
+              <Typography
+                color="textPrimary"
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  height: "5rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: "1px solid black",
+                }}
+              >
+                You haven't guessed or uploaded any locations yet.
+              </Typography>
+            </Box>
+          )}
         </Box>
       </ThemeProvider>
     </Wrapper>

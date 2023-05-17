@@ -8,6 +8,7 @@ import AddLocation from "./pages/location/add-location";
 import ProfilePage from "./pages/profile-page";
 import EditLocation from "./pages/location/edit-location";
 import GuessLocation from "./pages/location/guess-location";
+import AdminPage from "./pages/admin-page";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/add-location" element={<AddLocation />}></Route>
           <Route path="/edit-location" element={<EditLocation />}></Route>
           <Route path="/guess-location" element={<GuessLocation />}></Route>
+          <Route path="/admin" element={<AdminPage />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
