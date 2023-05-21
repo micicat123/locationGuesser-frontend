@@ -34,6 +34,7 @@ const AddLocation = () => {
   const post = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
+      console.log(locationName);
       const response: any = await axios.post(
         `/location`,
         { latitude: marker.lat, longitude: marker.lng, address: locationName },
@@ -60,12 +61,12 @@ const AddLocation = () => {
       setFile(file);
       setPreviewImage(URL.createObjectURL(file));
     }
+    logAction("changed value", "file", "file", window.location.pathname);
   };
 
   if (redirect) {
     return <Navigate to={"/"} />;
   }
-
   return (
     <Wrapper>
       <ThemeProvider theme={MUITheme}>

@@ -20,13 +20,15 @@ import { User } from "../models/user";
 import { Link } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import logAction from "./common/log-action";
+import ChangeInfo from "./popups/location/user/update-info";
+import UpdatePass from "./popups/location/user/update-pass";
+import UpdateImage from "./popups/location/user/update-image";
 
 const Nav = (props: { user: User }) => {
   let navigate = useNavigate();
   const [image, setImage] = useState<string>(
     "pictures/unset-profile-picture.png"
   );
-  const settings = ["Update info", "Update password", "Update picture"];
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -356,7 +358,7 @@ const Nav = (props: { user: User }) => {
                       sx={{ textDecoration: "none" }}
                     >
                       <MenuItem key={"Profile page"}>
-                        <Typography textAlign="center">
+                        <Typography textAlign="center" color="textPrimary">
                           {"Profile page"}
                         </Typography>
                       </MenuItem>
@@ -502,11 +504,15 @@ const Nav = (props: { user: User }) => {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                   >
-                    {settings.map((setting) => (
-                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">{setting}</Typography>
-                      </MenuItem>
-                    ))}
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <ChangeInfo user={props.user} />
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <UpdatePass />
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <UpdateImage image={image} id={props.user.user_id} />
+                    </MenuItem>
                   </Menu>
                 </Box>
               </Toolbar>

@@ -8,10 +8,13 @@ import {
   Typography,
 } from "@mui/material";
 import logAction from "../common/log-action";
+import ForgotPassword from "../popups/location/forgot-password";
 
 const LoginForm = (props: {
   setPassword: Function;
+  password: string;
   setUsername: Function;
+  username: string;
   submit: any;
   error: string;
 }) => {
@@ -57,7 +60,26 @@ const LoginForm = (props: {
               label="Email"
               variant="outlined"
               sx={{ width: "100%", color: "textPrimary" }}
-              onChange={(e) => props.setUsername(e.target.value)}
+              onChange={(e) => {
+                props.setUsername(e.target.value);
+                const previousValue = props.username;
+                const currentValue = e.target.value;
+
+                let action: string;
+                if (previousValue === "" && currentValue !== "") {
+                  action = "added value";
+                } else if (previousValue !== "" && currentValue === "") {
+                  action = "removed value";
+                } else {
+                  action = "changed value";
+                }
+                logAction(
+                  action,
+                  "text",
+                  e.target.value,
+                  window.location.pathname
+                );
+              }}
               autoComplete="email"
               required={true}
             />
@@ -71,7 +93,21 @@ const LoginForm = (props: {
               label="Password"
               variant="outlined"
               sx={{ width: "100%" }}
-              onChange={(e) => props.setPassword(e.target.value)}
+              onChange={(e) => {
+                props.setPassword(e.target.value);
+                const previousValue = props.password;
+                const currentValue = e.target.value;
+
+                let action: string;
+                if (previousValue === "" && currentValue !== "") {
+                  action = "added value";
+                } else if (previousValue !== "" && currentValue === "") {
+                  action = "removed value";
+                } else {
+                  action = "changed value";
+                }
+                logAction(action, "password", null, window.location.pathname);
+              }}
               type="password"
               autoComplete="password"
               required={true}
@@ -117,6 +153,7 @@ const LoginForm = (props: {
               </Link>
             </Typography>
           </Box>
+          <ForgotPassword />
         </Box>
       </form>
     </Box>

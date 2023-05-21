@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Avatar, Box, Grid, ThemeProvider, Typography } from "@mui/material";
 import { MUITheme } from "../mui/theme";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { User } from "../models/user";
 import Cookies from "js-cookie";
 import Wrapper from "../components/Wrapper";
@@ -12,6 +12,7 @@ import UsersLocations from "../components/profile-page/users-locations";
 const ProfilePage = () => {
   const [user, setUser] = useState<any>(new User());
   const [isMounted, setIsMounted] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   const [bestGuesses, setBestGuesses] = useState<any[]>([]);
   const [guessPage, setGuessPage] = useState(1);
@@ -29,21 +30,24 @@ const ProfilePage = () => {
   const location = useLocation();
 
   useEffect(() => {
-    setUser(location.state.user);
-
     const fetchData = async () => {
-      if (user.image) {
-        try {
-          const response = await axios.get(
-            `upload/user/${location.state.user.user_id}`,
-            {
-              responseType: "blob",
-            }
-          );
-          setImage(URL.createObjectURL(response.data));
-        } catch (err) {
-          console.log(err);
+      try {
+        setUser(location.state.user);
+        if (user.image) {
+          try {
+            const response = await axios.get(
+              `upload/user/${location.state.user.user_id}`,
+              {
+                responseType: "blob",
+              }
+            );
+            setImage(URL.createObjectURL(response.data));
+          } catch (err) {
+            console.log(err);
+          }
         }
+      } catch (err) {
+        setRedirect(true);
       }
     };
     fetchData();
@@ -78,6 +82,10 @@ const ProfilePage = () => {
     };
     fetchData();
   }, [isMounted, usersLocationsPage]);
+
+  if (redirect) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <Wrapper>

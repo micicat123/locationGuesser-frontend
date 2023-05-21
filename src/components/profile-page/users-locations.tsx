@@ -2,9 +2,9 @@ import { Box, Button, Grid, Link, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CreateIcon from "@mui/icons-material/Create";
-import ClearIcon from "@mui/icons-material/Clear";
 import { Link as RouterLink } from "react-router-dom";
 import logAction from "../common/log-action";
+import DeleteLocation from "../popups/location/delete-location";
 
 const UsersLocations = (props: {
   usersLocations: any[];
@@ -116,7 +116,7 @@ const UsersLocations = (props: {
                       );
                     }}
                   >
-                    <ClearIcon />
+                    <DeleteLocation id={location.location.id} />
                   </Button>
                 </Box>
                 <Box

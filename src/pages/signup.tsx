@@ -5,6 +5,7 @@ import { Box, Grid, ThemeProvider, Typography } from "@mui/material";
 import { MUITheme } from "../mui/theme";
 import LoginForm from "../components/forms/login.form";
 import SignupForm from "../components/forms/signup.form";
+import { last } from "lodash";
 
 const Signup = (props: any) => {
   const [username, setUsername] = useState("");
@@ -24,7 +25,7 @@ const Signup = (props: any) => {
     }
 
     try {
-      await axios.post("/auth/register", {
+      const response = await axios.post("/auth/register", {
         username,
         password,
         passwordConfirm,
@@ -33,17 +34,22 @@ const Signup = (props: any) => {
       });
 
       if (file != null) {
-        await axios.post(`upload/profile_pictures`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        await axios.post(
+          `upload/profile_pictures/${response.data.id}`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
       }
       setRedirect(true);
     } catch (err: any) {
       if (typeof err.response.data.message === "object")
         setErrorMessage(err.response.data.message[0]);
       else setErrorMessage(err.response.data.message);
+      console.log(err);
     }
   };
 
@@ -68,10 +74,15 @@ const Signup = (props: any) => {
           </a>
           <SignupForm
             setUsername={setUsername}
+            username={username}
             setPassword={setPassword}
+            password={password}
             setPasswordConfirm={setPasswordConfirm}
+            passwordConfirm={passwordConfirm}
             setFirstName={setFirstName}
+            firstName={firstName}
             setLastName={setLastName}
+            lastName={lastName}
             submit={register}
             error={errorMessage}
           />

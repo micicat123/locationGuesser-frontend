@@ -44,7 +44,9 @@ const Login = (props: any) => {
           </a>
           <LoginForm
             setUsername={setUsername}
+            username={username}
             setPassword={setPassword}
+            password={password}
             submit={login}
             error={errorMessage}
           />

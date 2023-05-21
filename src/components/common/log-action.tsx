@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const logAction = async (
   action: string,
-  component: string,
+  component: string | null,
   newValue: string | null,
   URL: string
 ) => {

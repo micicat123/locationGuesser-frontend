@@ -31,13 +31,17 @@ const EditLocation = () => {
   const locate = useLocation();
 
   useEffect(() => {
-    setPreviewImage(locate.state.location.imageUrl);
-    const newMarker = {
-      lat: Number(locate.state.location.location.latitude),
-      lng: Number(locate.state.location.location.longitude),
-    };
-    setMarker(newMarker);
-    setLocationName(locate.state.location.location.address);
+    try {
+      setPreviewImage(locate.state.location.imageUrl);
+      const newMarker = {
+        lat: Number(locate.state.location.location.latitude),
+        lng: Number(locate.state.location.location.longitude),
+      };
+      setMarker(newMarker);
+      setLocationName(locate.state.location.location.address);
+    } catch (err) {
+      setRedirect(true);
+    }
   }, []);
 
   const update = async (e: SyntheticEvent) => {

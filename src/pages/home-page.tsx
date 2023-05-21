@@ -8,6 +8,7 @@ import { Box, Button, ThemeProvider } from "@mui/material";
 import { MUITheme, buttonStyle } from "../mui/theme";
 import PersonalBestGrid3 from "../components/home-page/personal-best-three";
 import MostRecentLocations from "../components/home-page/new-locations";
+import DeleteLocation from "../components/popups/location/delete-location";
 
 const HomePage = () => {
   const [loggedIn, setLoggedin] = useState(false);

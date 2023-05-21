@@ -16,10 +16,15 @@ import logAction from "../common/log-action";
 
 const SignupForm = (props: {
   setUsername: Function;
+  username: string;
   setPassword: Function;
+  password: string;
   setPasswordConfirm: Function;
+  passwordConfirm: string;
   setFirstName: Function;
+  firstName: string;
   setLastName: Function;
+  lastName: string;
 
   submit: any;
   error: string;
@@ -43,6 +48,7 @@ const SignupForm = (props: {
       setFile(file);
       setPreviewImage(URL.createObjectURL(file));
     }
+    logAction("changed value", "file", "file", window.location.pathname);
   };
 
   return (
@@ -101,7 +107,27 @@ const SignupForm = (props: {
             <TextField
               label="Email"
               sx={{ width: "100%", color: "textPrimary" }}
-              onChange={(e) => props.setUsername(e.target.value)}
+              onChange={(e) => {
+                props.setUsername(e.target.value);
+
+                const previousValue = props.username;
+                const currentValue = e.target.value;
+
+                let action: string;
+                if (previousValue === "" && currentValue !== "") {
+                  action = "added value";
+                } else if (previousValue !== "" && currentValue === "") {
+                  action = "removed value";
+                } else {
+                  action = "changed value";
+                }
+                logAction(
+                  action,
+                  "text",
+                  e.target.value,
+                  window.location.pathname
+                );
+              }}
               variant="standard"
               autoComplete="email"
               required={true}
@@ -114,7 +140,26 @@ const SignupForm = (props: {
           >
             <TextField
               label="First Name"
-              onChange={(e) => props.setFirstName(e.target.value)}
+              onChange={(e) => {
+                props.setFirstName(e.target.value);
+                const previousValue = props.firstName;
+                const currentValue = e.target.value;
+
+                let action: string;
+                if (previousValue === "" && currentValue !== "") {
+                  action = "added value";
+                } else if (previousValue !== "" && currentValue === "") {
+                  action = "removed value";
+                } else {
+                  action = "changed value";
+                }
+                logAction(
+                  action,
+                  "text",
+                  e.target.value,
+                  window.location.pathname
+                );
+              }}
               variant="standard"
               sx={{
                 width: "47.5%",
@@ -125,7 +170,26 @@ const SignupForm = (props: {
             />
             <TextField
               label="Last Name"
-              onChange={(e) => props.setLastName(e.target.value)}
+              onChange={(e) => {
+                props.setLastName(e.target.value);
+                const previousValue = props.lastName;
+                const currentValue = e.target.value;
+
+                let action: string;
+                if (previousValue === "" && currentValue !== "") {
+                  action = "added value";
+                } else if (previousValue !== "" && currentValue === "") {
+                  action = "removed value";
+                } else {
+                  action = "changed value";
+                }
+                logAction(
+                  action,
+                  "text",
+                  e.target.value,
+                  window.location.pathname
+                );
+              }}
               variant="standard"
               sx={{
                 width: "47.5%",
@@ -140,7 +204,21 @@ const SignupForm = (props: {
             <TextField
               label="Password"
               sx={{ width: "100%", color: "textPrimary" }}
-              onChange={(e) => props.setPassword(e.target.value)}
+              onChange={(e) => {
+                props.setPassword(e.target.value);
+                const previousValue = props.password;
+                const currentValue = e.target.value;
+
+                let action: string;
+                if (previousValue === "" && currentValue !== "") {
+                  action = "added value";
+                } else if (previousValue !== "" && currentValue === "") {
+                  action = "removed value";
+                } else {
+                  action = "changed value";
+                }
+                logAction(action, "text", null, window.location.pathname);
+              }}
               type={showPassword ? "text" : "password"}
               variant="standard"
               autoComplete="password"
@@ -166,7 +244,21 @@ const SignupForm = (props: {
             <TextField
               label="Confirm Password"
               sx={{ width: "100%", color: "textPrimary" }}
-              onChange={(e) => props.setPasswordConfirm(e.target.value)}
+              onChange={(e) => {
+                props.setPasswordConfirm(e.target.value);
+                const previousValue = props.passwordConfirm;
+                const currentValue = e.target.value;
+
+                let action: string;
+                if (previousValue === "" && currentValue !== "") {
+                  action = "added value";
+                } else if (previousValue !== "" && currentValue === "") {
+                  action = "removed value";
+                } else {
+                  action = "changed value";
+                }
+                logAction(action, "text", null, window.location.pathname);
+              }}
               type={showPassword ? "text" : "password"}
               variant="standard"
               autoComplete="confirm-password"
