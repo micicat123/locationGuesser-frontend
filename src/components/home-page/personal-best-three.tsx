@@ -7,6 +7,7 @@ const PersonalBestGrid3 = (props: {
   isLastPage: boolean;
   setPage: any;
   page: number;
+  user_id: number;
 }) => {
   return (
     <>
@@ -26,6 +27,8 @@ const PersonalBestGrid3 = (props: {
                 distance={guess.errorDistance}
                 id={guess.location.id}
                 maxHeight="236.56px"
+                location={guess.location}
+                user_id={props.user_id}
               />
             </Grid>
           );

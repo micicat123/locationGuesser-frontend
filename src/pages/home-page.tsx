@@ -136,6 +136,7 @@ const HomePage = () => {
                 isLastPage={isGuessLastPage}
                 setPage={setGuessPage}
                 page={guessPage}
+                user_id={userId}
               />
             )}
             <MostRecentLocations

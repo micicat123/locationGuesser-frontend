@@ -58,11 +58,11 @@ const SignupForm = (props: {
         flexDirection: "column",
         justifyContent: "center",
 
-        mt: { xs: 4, sm: 4, md: 0 },
+        mt: { xs: 8, sm: 10, md: 0 },
         width: { sm: 500, md: "unset" },
         height: "90%",
-        ml: 10,
-        mr: 10,
+        ml: { xs: 2, sm: 7 },
+        mr: { xs: 2, sm: 7 },
       }}
     >
       <Typography variant="h3" align="center" color={"textPrimary"}>

@@ -72,78 +72,34 @@ const LockedLocations = (props: any) => {
             flexWrap: "wrap",
           }}
         >
-          <Box
-            sx={{
-              background: MUITheme.palette.gradients.green,
-              height: 235,
-              width: 420,
-              position: "relative",
-              borderRadius: "4px",
-            }}
-          >
-            <LockOutlinedIcon sx={lockIconStyle} />
+          {images.map((image, index) => (
             <Box
-              component="img"
+              key={index}
               sx={{
-                borderRadius: "4px",
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                zIndex: -1,
+                background: MUITheme.palette.gradients.green,
+                height: 235,
+                width: 420,
                 position: "relative",
-                boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.15)",
-              }}
-              src={images[0]}
-            />
-          </Box>
-          <Box
-            sx={{
-              background: MUITheme.palette.gradients.green,
-              borderRadius: "4px",
-              height: 235,
-              width: 420,
-              position: "relative",
-            }}
-          >
-            <LockOutlinedIcon sx={lockIconStyle} />
-            <Box
-              component="img"
-              sx={{
                 borderRadius: "4px",
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                zIndex: -1,
-                position: "relative",
-                boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.15)",
               }}
-              src={images[1]}
-            />
-          </Box>
-          <Box
-            sx={{
-              background: MUITheme.palette.gradients.green,
-              height: 235,
-              width: 420,
-              position: "relative",
-              borderRadius: "4px",
-            }}
-          >
-            <LockOutlinedIcon sx={lockIconStyle} />
-            <Box
-              component="img"
-              sx={{
-                borderRadius: "4px",
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                zIndex: -1,
-                position: "relative",
-                boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.15)",
-              }}
-              src={images[2]}
-            />
-          </Box>
+            >
+              <LockOutlinedIcon sx={lockIconStyle} />
+              <Box
+                component="img"
+                sx={{
+                  borderRadius: "4px",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "bottom",
+                  zIndex: -1,
+                  position: "relative",
+                  boxShadow: "0 0 8px 0 rgba(0, 0, 0, 0.15)",
+                }}
+                src={image}
+              />
+            </Box>
+          ))}
         </Box>
         <Button
           href="/signup"

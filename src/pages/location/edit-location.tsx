@@ -103,136 +103,140 @@ const EditLocation = () => {
               </span>
             </Typography>
           </Box>
-
-          <form onSubmit={(e: SyntheticEvent) => update(e)}>
-            <img
-              src={previewImage}
-              alt="upload profile picture"
-              width="100%"
-              height={280}
-              style={{
-                objectFit: "cover",
-                marginTop: "16px",
-                display: "block",
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginBottom: "23px",
-              }}
-            />
-            <div>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "right",
-                  margin: "auto",
-                  gap: 3,
+          <Box sx={{ ml: { xl: 50, lg: 30 }, mr: { xl: 50, lg: 30 } }}>
+            <form onSubmit={(e: SyntheticEvent) => update(e)}>
+              <img
+                src={previewImage}
+                alt="upload profile picture"
+                width="100%"
+                height={280}
+                style={{
+                  objectFit: "cover",
+                  objectPosition: "bottom",
+                  marginTop: "16px",
+                  display: "block",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  marginBottom: "23px",
                 }}
-              >
-                <Button
-                  variant="contained"
-                  sx={{
-                    height: 40,
-                    width: { xs: "100%", sm: 200 },
-                    fontWeight: 400,
-                    position: "relative",
-                  }}
-                  onClick={() => {
-                    logAction(
-                      "click",
-                      "button",
-                      "upload-image",
-                      window.location.pathname
-                    );
-                  }}
-                >
-                  <input
-                    type="file"
-                    onChange={handleFileChange}
-                    id="upload-file"
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      opacity: 0,
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  />
-                  UPLOAD IMAGE
-                </Button>
-              </Box>
-            </div>
-            {apiKey ? (
-              <>
-                <LoadScript googleMapsApiKey={apiKey}>
-                  <GoogleMap
-                    onClick={(e) => handleClick(e, setMarker, setLocationName)}
-                    mapContainerStyle={{
-                      height: "197px",
-                      margin: "23px auto 23px auto",
-                    }}
-                    center={marker}
-                    zoom={2}
-                    options={MapOptions}
-                  >
-                    <Marker position={marker} />
-                  </GoogleMap>
-                </LoadScript>
+              />
+              <div>
                 <Box
                   sx={{
-                    marginLeft: "auto",
-                    marginRight: "auto",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "right",
+                    margin: "auto",
+                    gap: 3,
                   }}
                 >
-                  <Typography
-                    color="textPrimary"
-                    variant="body1"
-                    sx={{ mb: "11px" }}
-                  >
-                    Location
-                  </Typography>
-                  <TextField
-                    sx={{ width: "100%" }}
-                    value={locationName}
-                    onChange={(
-                      event: React.ChangeEvent<HTMLInputElement>
-                    ) => {}}
-                  />
-                  <Box
+                  <Button
+                    variant="contained"
                     sx={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      mt: "16px",
-                      mb: "50px",
+                      height: 40,
+                      width: { xs: "100%", sm: 200 },
+                      fontWeight: 400,
+                      position: "relative",
+                    }}
+                    onClick={() => {
+                      logAction(
+                        "click",
+                        "button",
+                        "upload-image",
+                        window.location.pathname
+                      );
                     }}
                   >
-                    <Button
-                      variant="contained"
-                      sx={{
-                        ...buttonStyle,
-                        width: { xs: "100%", sm: "22.5%" },
-                        height: 39,
+                    <input
+                      type="file"
+                      onChange={handleFileChange}
+                      id="upload-file"
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        opacity: 0,
+                        width: "100%",
+                        height: "100%",
                       }}
-                      type="submit"
-                      onClick={() => {
-                        logAction(
-                          "click",
-                          "button",
-                          "save-edited-location",
-                          window.location.pathname
-                        );
+                    />
+                    UPLOAD IMAGE
+                  </Button>
+                </Box>
+              </div>
+              {apiKey ? (
+                <>
+                  <LoadScript googleMapsApiKey={apiKey}>
+                    <GoogleMap
+                      onClick={(e) =>
+                        handleClick(e, setMarker, setLocationName)
+                      }
+                      mapContainerStyle={{
+                        height: "197px",
+                        margin: "23px auto 23px auto",
+                      }}
+                      center={marker}
+                      zoom={2}
+                      options={MapOptions}
+                    >
+                      <Marker position={marker} />
+                    </GoogleMap>
+                  </LoadScript>
+                  <Box
+                    sx={{
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                    }}
+                  >
+                    <Typography
+                      color="textPrimary"
+                      variant="body1"
+                      sx={{ mb: "11px" }}
+                    >
+                      Location
+                    </Typography>
+                    <TextField
+                      sx={{ width: "100%" }}
+                      value={locationName}
+                      onChange={(
+                        event: React.ChangeEvent<HTMLInputElement>
+                      ) => {}}
+                    />
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        mt: "16px",
+                        mb: "50px",
                       }}
                     >
-                      SAVE
-                    </Button>
+                      <Button
+                        variant="contained"
+                        sx={{
+                          ...buttonStyle,
+                          width: { xs: "100%", sm: "22.5%" },
+                          height: 39,
+                        }}
+                        type="submit"
+                        onClick={() => {
+                          logAction(
+                            "click",
+                            "button",
+                            "save-edited-location",
+                            window.location.pathname
+                          );
+                        }}
+                      >
+                        SAVE
+                      </Button>
+                    </Box>
                   </Box>
-                </Box>
-              </>
-            ) : (
-              <></>
-            )}
-          </form>
+                </>
+              ) : (
+                <></>
+              )}
+            </form>
+          </Box>
         </Box>
       </ThemeProvider>
     </Wrapper>

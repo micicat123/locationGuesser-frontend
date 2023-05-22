@@ -28,6 +28,13 @@ const GuessLocation = () => {
   const [errorDistance, setErrorDistance] = useState<string | null>(null);
   const apiKey = process.env.REACT_APP_API_KEY;
 
+  useEffect(() => {
+    if (location.state.errorDistance) {
+      setErrorDistance(location.state.errorDistance);
+      setLocationName(location.state.locationName);
+    }
+  }, []);
+
   const guess = async (e: SyntheticEvent) => {
     e.preventDefault();
     const distance = getErrorDistance(marker.lat, marker.lng);

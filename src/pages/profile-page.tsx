@@ -96,6 +96,7 @@ const ProfilePage = () => {
               isLastPage={isGuessLastPage}
               setPage={setGuessPage}
               page={guessPage}
+              user_id={user.id}
             />
           )}
           {usersLocations.length > 0 && (
