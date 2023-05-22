@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import {
   Box,
   Button,
+  Hidden,
   TextField,
   ThemeProvider,
   Typography,
@@ -67,7 +68,7 @@ const GuessLocation = () => {
     <Wrapper>
       <ThemeProvider theme={MUITheme}>
         <Box sx={{ display: "flex", ml: 10, mr: 10, mt: "66px" }}>
-          <Box sx={{ width: "67%" }}>
+          <Box sx={{ width: { xs: "100%", sm: "100%", md: "67%" } }}>
             <Typography color="textPrimary" variant="h4">
               Take a{" "}
               <span style={{ color: MUITheme.palette.primary.main }}>
@@ -123,7 +124,15 @@ const GuessLocation = () => {
                     }}
                   >
                     <Box
-                      sx={{ display: "flex", justifyContent: "space-between" }}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        flexDirection: {
+                          xs: "column",
+                          sm: "column",
+                          md: "row",
+                        },
+                      }}
                     >
                       <Box>
                         <Typography
@@ -134,12 +143,13 @@ const GuessLocation = () => {
                           Error distance
                         </Typography>
                         <TextField
+                          sx={{ width: "100%", mb: 2 }}
                           value={
                             errorDistance !== null ? errorDistance + " m" : ""
                           }
                         />
                       </Box>
-                      <Box sx={{ width: "70%" }}>
+                      <Box sx={{ width: { sm: "100%", md: "60%", lg: "70%" } }}>
                         <Typography
                           color="textPrimary"
                           variant="body1"
@@ -148,7 +158,7 @@ const GuessLocation = () => {
                           Guessed location
                         </Typography>
                         <TextField
-                          sx={{ width: "100%" }}
+                          sx={{ width: "100%", mb: 2 }}
                           value={locationName}
                           required
                         />
@@ -158,7 +168,6 @@ const GuessLocation = () => {
                       sx={{
                         display: "flex",
                         justifyContent: "flex-end",
-                        mt: "16px",
                         mb: "50px",
                       }}
                     >
@@ -186,14 +195,25 @@ const GuessLocation = () => {
               <></>
             )}
           </Box>
-          <Box sx={{ width: "33%", ml: "20px" }}>
+          <Hidden mdDown>
+            <Box sx={{ width: "33%", ml: "20px" }}>
+              <Leaderboard
+                location_id={location.state.location.location.id}
+                errorDistance={errorDistance}
+                userId={location.state.user}
+              />
+            </Box>
+          </Hidden>
+        </Box>
+        <Hidden mdUp>
+          <Box sx={{ ml: 10, mr: 10, mt: "45px", mb: "45px" }}>
             <Leaderboard
               location_id={location.state.location.location.id}
               errorDistance={errorDistance}
               userId={location.state.user}
             />
           </Box>
-        </Box>
+        </Hidden>
       </ThemeProvider>
     </Wrapper>
   );

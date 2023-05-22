@@ -33,19 +33,6 @@ const ProfilePage = () => {
     const fetchData = async () => {
       try {
         setUser(location.state.user);
-        if (user.image) {
-          try {
-            const response = await axios.get(
-              `upload/user/${location.state.user.user_id}`,
-              {
-                responseType: "blob",
-              }
-            );
-            setImage(URL.createObjectURL(response.data));
-          } catch (err) {
-            console.log(err);
-          }
-        }
       } catch (err) {
         setRedirect(true);
       }
@@ -98,7 +85,7 @@ const ProfilePage = () => {
               alignItems: "center",
             }}
           >
-            <Avatar src={image} sx={{ width: 64, height: 64 }} />
+            <Avatar src={location.state.image} sx={{ width: 64, height: 64 }} />
             <Typography color="textPrimary" variant="h4">
               {user.first_name} {user.last_name}
             </Typography>

@@ -3,6 +3,7 @@ import {
   Button,
   FormControl,
   FormHelperText,
+  Hidden,
   Link,
   TextField,
   Typography,
@@ -98,7 +99,11 @@ const UpdateInfoForm = (props: {
             </FormControl>
             <br />
             <FormControl
-              sx={{ display: "flex", flexDirection: "row", gap: "5%" }}
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                gap: "5%",
+              }}
             >
               <TextField
                 label="First Name"
@@ -125,12 +130,15 @@ const UpdateInfoForm = (props: {
                 }}
                 variant="standard"
                 sx={{
-                  width: "47.5%",
+                  width: { xs: "100%", sm: "47.5%" },
                   color: "textPrimary",
                 }}
                 autoComplete="first-name"
                 required={true}
               />
+              <Hidden smUp>
+                <br />
+              </Hidden>
               <TextField
                 label="Last Name"
                 value={lastName}
@@ -156,7 +164,7 @@ const UpdateInfoForm = (props: {
                 }}
                 variant="standard"
                 sx={{
-                  width: "47.5%",
+                  width: { xs: "100%", sm: "47.5%" },
                   color: "textPrimary",
                 }}
                 autoComplete="last-name"

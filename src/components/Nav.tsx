@@ -78,7 +78,7 @@ const Nav = (props: { user: User }) => {
   return (
     <ThemeProvider theme={MUITheme}>
       <>
-        {props.user.username == "" ? ( //user is not logged in (home page)
+        {props.user.first_name == "" ? ( //user is not logged in (home page)
           <AppBar position="static" sx={{ backgroundColor: "white" }}>
             <Container maxWidth="xl">
               <Toolbar disableGutters>
@@ -108,7 +108,7 @@ const Nav = (props: { user: User }) => {
                   variant="h5"
                   noWrap
                   component="a"
-                  href=""
+                  href="/"
                   sx={{
                     ml: 8,
                     display: { xs: "flex", md: "none" },
@@ -146,7 +146,7 @@ const Nav = (props: { user: User }) => {
                           aria-haspopup="true"
                           onClick={handleOpenNavMenu}
                         >
-                          <MenuIcon />
+                          <MenuIcon color="primary" />
                         </IconButton>
                         <Menu
                           id="menu-appbar"
@@ -268,6 +268,154 @@ const Nav = (props: { user: User }) => {
               </Toolbar>
             </Container>
           </AppBar>
+        ) : props.user.first_name === "Rico" ? (
+          <AppBar
+            position="static"
+            sx={{ backgroundColor: "white", boxShadow: "none" }}
+          >
+            <Container maxWidth="xl">
+              <Toolbar disableGutters>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  href="/"
+                  sx={{
+                    ml: 8,
+                    display: { xs: "none", md: "flex" },
+                    fontFamily: "monospace",
+                    fontWeight: 700,
+                    letterSpacing: ".3rem",
+                    color: "inherit",
+                    textDecoration: "none",
+                  }}
+                >
+                  <img
+                    src="/pictures/logo.png"
+                    alt="logo"
+                    className="logo"
+                    width={125}
+                  />
+                </Typography>
+                <Typography
+                  variant="h5"
+                  noWrap
+                  component="a"
+                  href="/"
+                  sx={{
+                    ml: { xs: 4, sm: 4, md: 6 },
+                    display: { xs: "flex", md: "none" },
+                    flexGrow: 1,
+                    fontFamily: "monospace",
+                    fontWeight: 700,
+                    letterSpacing: ".3rem",
+                    color: "inherit",
+                    textDecoration: "none",
+                  }}
+                >
+                  <img src="/pictures/logo.png" alt="logo" width={125} />
+                </Typography>
+                <Box
+                  sx={{
+                    flexGrow: 0,
+                    alignItems: "center",
+                    marginLeft: "auto",
+                    marginRight: 8,
+                    width: "20%",
+                  }}
+                >
+                  <Tooltip title="Open settings">
+                    <>
+                      <Box
+                        sx={{
+                          flexGrow: 1,
+                          display: { xs: "flex", md: "none" },
+                          ml: 8,
+                        }}
+                      >
+                        <IconButton
+                          size="large"
+                          aria-label="account of current user"
+                          aria-controls="menu-appbar"
+                          aria-haspopup="true"
+                          onClick={handleOpenNavMenu}
+                        >
+                          <MenuIcon color="primary" />
+                        </IconButton>
+                        <Menu
+                          id="menu-appbar"
+                          anchorEl={anchorElNav}
+                          anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "left",
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "left",
+                          }}
+                          open={Boolean(anchorElNav)}
+                          onClose={handleCloseNavMenu}
+                          sx={{
+                            display: { xs: "block", md: "none" },
+                          }}
+                        >
+                          <MenuItem
+                            key={"Home"}
+                            onClick={() => {
+                              navigate("/");
+                              logAction(
+                                "click",
+                                "link",
+                                "link-home",
+                                window.location.pathname
+                              );
+                            }}
+                          >
+                            <Typography textAlign="center">{"Home"}</Typography>
+                          </MenuItem>
+
+                          <MenuItem
+                            key={"Signup"}
+                            onClick={() => {
+                              navigate("/signup");
+                              logAction(
+                                "click",
+                                "link",
+                                "link-signup",
+                                window.location.pathname
+                              );
+                            }}
+                          >
+                            <Typography textAlign="center">
+                              {"Signup"}
+                            </Typography>
+                          </MenuItem>
+
+                          <MenuItem
+                            key={"Login"}
+                            onClick={() => {
+                              navigate("/login");
+                              logAction(
+                                "click",
+                                "link",
+                                "link-login",
+                                window.location.pathname
+                              );
+                            }}
+                          >
+                            <Typography textAlign="center">
+                              {"Login"}
+                            </Typography>
+                          </MenuItem>
+                        </Menu>
+                      </Box>
+                    </>
+                  </Tooltip>
+                </Box>
+              </Toolbar>
+            </Container>
+          </AppBar>
         ) : (
           //user is logged in
           <AppBar position="static" sx={{ backgroundColor: "white" }}>
@@ -299,7 +447,7 @@ const Nav = (props: { user: User }) => {
                   sx={{
                     flexGrow: 1,
                     display: { xs: "flex", md: "none" },
-                    ml: 8,
+                    ml: { xs: 1, sm: 8 },
                   }}
                 >
                   <IconButton
@@ -309,7 +457,7 @@ const Nav = (props: { user: User }) => {
                     aria-haspopup="true"
                     onClick={handleOpenNavMenu}
                   >
-                    <MenuIcon />
+                    <MenuIcon color="primary" />
                   </IconButton>
                   <Menu
                     id="menu-appbar"
@@ -383,7 +531,7 @@ const Nav = (props: { user: User }) => {
                   variant="h5"
                   noWrap
                   component="a"
-                  href=""
+                  href="/"
                   sx={{
                     mr: 8,
                     display: { xs: "flex", md: "none" },
@@ -462,7 +610,7 @@ const Nav = (props: { user: User }) => {
                     </Typography>
                   </a>
                 </Box>
-                <Box sx={{ flexGrow: 0, mr: 8 }}>
+                <Box sx={{ flexGrow: 0, mr: { xs: 1, sm: 8 } }}>
                   <Tooltip title="Open settings">
                     <>
                       <div style={{ display: "flex", gap: 15 }}>

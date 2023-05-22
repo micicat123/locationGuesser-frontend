@@ -19,6 +19,7 @@ import {
   handleClick,
 } from "../../components/common/map-options-setMarker";
 import logAction from "../../components/common/log-action";
+import PlaceIcon from "@mui/icons-material/Place";
 
 const AddLocation = () => {
   const [file, setFile] = useState<any | null>(null);
@@ -83,7 +84,7 @@ const AddLocation = () => {
           <form onSubmit={(e: SyntheticEvent) => post(e)}>
             <img
               src={previewImage}
-              width={860}
+              width="100%"
               height={280}
               style={{
                 objectFit: "cover",
@@ -100,7 +101,6 @@ const AddLocation = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "right",
-                  width: "53.75rem",
                   margin: "auto",
                   gap: 3,
                 }}
@@ -109,7 +109,7 @@ const AddLocation = () => {
                   variant="contained"
                   sx={{
                     height: 40,
-                    width: 200,
+                    width: { xs: "100%", sm: "40%" },
                     fontWeight: 400,
                     position: "relative",
                   }}
@@ -174,7 +174,7 @@ const AddLocation = () => {
                   <GoogleMap
                     onClick={(e) => handleClick(e, setMarker, setLocationName)}
                     mapContainerStyle={{
-                      width: "860px",
+                      width: "100%",
                       height: "197px",
                       margin: "23px auto 23px auto",
                     }}
@@ -191,7 +191,6 @@ const AddLocation = () => {
                 </LoadScript>
                 <Box
                   sx={{
-                    width: "860px",
                     marginLeft: "auto",
                     marginRight: "auto",
                   }}
@@ -221,7 +220,11 @@ const AddLocation = () => {
                   >
                     <Button
                       variant="contained"
-                      sx={{ buttonStyle }}
+                      sx={{
+                        ...buttonStyle,
+                        width: { xs: "100%", sm: "25%" },
+                        height: 39,
+                      }}
                       type="submit"
                       onClick={() => {
                         logAction(

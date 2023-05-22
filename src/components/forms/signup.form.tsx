@@ -58,6 +58,8 @@ const SignupForm = (props: {
         flexDirection: "column",
         justifyContent: "center",
 
+        mt: { xs: 4, sm: 4, md: 0 },
+        width: { sm: 500, md: "unset" },
         height: "90%",
         ml: 10,
         mr: 10,
@@ -82,8 +84,8 @@ const SignupForm = (props: {
             <img
               src={previewImage}
               alt="upload profile picture"
-              width={80}
-              height={80}
+              width={75}
+              height={75}
               style={{
                 borderRadius: "50%",
                 objectFit: "cover",
@@ -91,6 +93,12 @@ const SignupForm = (props: {
                 display: "block",
                 marginLeft: "auto",
                 marginRight: "auto",
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.src = "pictures/profile-picture-hover.png";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.src = previewImage;
               }}
             />
           </label>

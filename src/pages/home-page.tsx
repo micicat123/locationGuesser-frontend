@@ -123,7 +123,13 @@ const HomePage = () => {
               </Button>
             </Box>
           )}
-          <Box mt="83px" ml={11} mr={11}>
+          <Box
+            mt="83px"
+            sx={{
+              ml: 11,
+              mr: 11,
+            }}
+          >
             {bestGuesses.length > 0 && (
               <PersonalBestGrid3
                 bestGuesses={bestGuesses}

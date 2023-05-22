@@ -1,15 +1,19 @@
 import { SyntheticEvent, useState } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import { Box, Grid, ThemeProvider, Typography } from "@mui/material";
+import { Box, Grid, Hidden, ThemeProvider, Typography } from "@mui/material";
 import { MUITheme } from "../mui/theme";
 import LoginForm from "../components/forms/login.form";
+import Nav from "../components/Nav";
+import { User } from "../models/user";
 
 const Login = (props: any) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const userRico = new User(1, "Rico", "", "", "", "");
 
   const login = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -30,18 +34,14 @@ const Login = (props: any) => {
 
   return (
     <ThemeProvider theme={MUITheme}>
-      <Grid container>
-        <Grid item xs={5}>
-          <a href="/">
-            <Box
-              component="img"
-              width={171}
-              alt="Backround image."
-              src="/pictures/logo.png"
-              mt={5.75}
-              ml={8.75}
-            />
-          </a>
+      <Hidden mdUp>
+        <Nav user={userRico} />
+      </Hidden>
+      <Grid container justifyContent={"center"}>
+        <Grid item sm={0} md={5}>
+          <Hidden mdDown>
+            <Nav user={userRico} />
+          </Hidden>
           <LoginForm
             setUsername={setUsername}
             username={username}
@@ -51,11 +51,12 @@ const Login = (props: any) => {
             error={errorMessage}
           />
         </Grid>
-        <Grid item xs={7}>
+        <Grid item sm={12} md={7}>
           <Box
             component="img"
             sx={{
               width: "100%",
+              display: { xs: "none", sm: "none", md: "block", lg: "block" },
             }}
             alt="Backround image."
             src="/pictures/background-logo.png"

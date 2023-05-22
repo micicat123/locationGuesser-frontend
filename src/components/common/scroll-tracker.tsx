@@ -22,7 +22,6 @@ const ScrollTracker = ({ children }: ScrollTrackerProps) => {
           window.scrollY.toString(),
           window.location.pathname
         );
-        console.log("logged scroll");
       }, 500);
     };
 

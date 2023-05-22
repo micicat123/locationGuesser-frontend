@@ -36,8 +36,13 @@ const LockedLocations = (props: any) => {
 
   return (
     <ThemeProvider theme={MUITheme}>
-      <Box sx={{ textAlign: "center", mt: "223px" }}>
-        <Typography color="primary" variant="h4">
+      <Box
+        sx={{
+          textAlign: "center",
+          mt: { xs: 4, sm: 4, md: 20, lg: 20, xl: 20 },
+        }}
+      >
+        <Typography color="primary" variant="h4" p={1}>
           Try yourself at Geotagger!
         </Typography>
         <Typography
@@ -49,6 +54,7 @@ const LockedLocations = (props: any) => {
             marginRight: "auto",
             mt: "29px",
             mb: "74px",
+            p: 2,
           }}
         >
           Try to guess the location of image by selecting position on the map.

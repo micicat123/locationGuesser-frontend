@@ -108,7 +108,7 @@ const EditLocation = () => {
             <img
               src={previewImage}
               alt="upload profile picture"
-              width={860}
+              width="100%"
               height={280}
               style={{
                 objectFit: "cover",
@@ -125,7 +125,6 @@ const EditLocation = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "right",
-                  width: "53.75rem",
                   margin: "auto",
                   gap: 3,
                 }}
@@ -134,7 +133,7 @@ const EditLocation = () => {
                   variant="contained"
                   sx={{
                     height: 40,
-                    width: 200,
+                    width: { xs: "100%", sm: 200 },
                     fontWeight: 400,
                     position: "relative",
                   }}
@@ -170,7 +169,6 @@ const EditLocation = () => {
                   <GoogleMap
                     onClick={(e) => handleClick(e, setMarker, setLocationName)}
                     mapContainerStyle={{
-                      width: "860px",
                       height: "197px",
                       margin: "23px auto 23px auto",
                     }}
@@ -183,7 +181,6 @@ const EditLocation = () => {
                 </LoadScript>
                 <Box
                   sx={{
-                    width: "860px",
                     marginLeft: "auto",
                     marginRight: "auto",
                   }}
@@ -212,7 +209,11 @@ const EditLocation = () => {
                   >
                     <Button
                       variant="contained"
-                      sx={{ buttonStyle }}
+                      sx={{
+                        ...buttonStyle,
+                        width: { xs: "100%", sm: "22.5%" },
+                        height: 39,
+                      }}
                       type="submit"
                       onClick={() => {
                         logAction(

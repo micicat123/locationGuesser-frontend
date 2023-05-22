@@ -25,13 +25,11 @@ const LoginForm = (props: {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        pl: 2,
-        pr: 2,
-        ml: "auto",
-        mr: "auto",
+        mt: { xs: 4, sm: 4, md: 0 },
+        width: { sm: 500, md: "unset" },
         height: "90%",
-        minWidth: "20%",
-        maxWidth: "70%",
+        ml: 10,
+        mr: 10,
       }}
     >
       <Typography variant="h3" align="center" color={"textPrimary"}>

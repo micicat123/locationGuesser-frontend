@@ -1,4 +1,11 @@
-import { Box, Container, Grid, ThemeProvider, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Hidden,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import { MUITheme } from "../mui/theme";
 
 const Footer = () => {
@@ -18,14 +25,25 @@ const Footer = () => {
           bottom: 0,
         }}
       >
-        <Box sx={{ ml: 11 }}>
-          <img
-            src="/pictures/logo-letters.png"
-            alt="logo"
-            className="logo"
-            width={125}
-          />
-        </Box>
+        <Hidden smDown>
+          <Box sx={{ ml: 11 }}>
+            <img
+              src="/pictures/logo-letters.png"
+              alt="logo"
+              className="logo"
+              width={125}
+            />
+          </Box>
+        </Hidden>
+        <Hidden smUp>
+          <Box sx={{ ml: 11 }}>
+            <img
+              src="/pictures/logo-responsive.png"
+              alt="logo"
+              className="logo"
+            />
+          </Box>
+        </Hidden>
 
         <Typography color="white" variant="body1" sx={{ mr: 11 }}>
           All Rights Reserved | skillupmentor.com

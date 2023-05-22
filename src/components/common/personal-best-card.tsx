@@ -6,7 +6,6 @@ import axios from "axios";
 const PersonalBestCard = (props: {
   distance: number;
   id: number;
-  maxWidth: string;
   maxHeight: string;
 }) => {
   const [image, setImage] = useState<string>("");
@@ -28,7 +27,6 @@ const PersonalBestCard = (props: {
         background: MUITheme.palette.gradients.green,
         position: "relative",
         width: "100%",
-        maxWidth: props.maxWidth,
         maxHeight: props.maxHeight,
         height: "100%",
       }}

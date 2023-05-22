@@ -37,7 +37,6 @@ const Leaderboard = (props: {
     fetchData();
   }, [guesses]);
 
-  console.log(props.userId);
   return (
     <Box sx={{ width: "100%" }}>
       <Typography color="textPrimary" variant="h4" sx={{ mr: 11, mb: 2 }}>

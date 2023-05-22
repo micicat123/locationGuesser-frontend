@@ -25,7 +25,6 @@ const PersonalBestGrid3 = (props: {
               <PersonalBestCard
                 distance={guess.errorDistance}
                 id={guess.location.id}
-                maxWidth="420px"
                 maxHeight="236.56px"
               />
             </Grid>
