@@ -1,16 +1,11 @@
 import {
-  Avatar,
   Box,
-  Button,
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogContentText,
-  DialogTitle,
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { MUITheme, buttonStyle } from "../../../mui/theme";
+import { MUITheme } from "../../../mui/theme";
 import { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteLocationConfirm from "./delete-location-confirmation";

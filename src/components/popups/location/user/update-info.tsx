@@ -1,12 +1,6 @@
 import {
-  Avatar,
-  Box,
-  Button,
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogContentText,
-  DialogTitle,
   ThemeProvider,
   Typography,
 } from "@mui/material";

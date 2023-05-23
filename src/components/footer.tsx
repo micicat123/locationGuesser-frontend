@@ -1,11 +1,4 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Hidden,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import { Box, Hidden, ThemeProvider, Typography } from "@mui/material";
 import { MUITheme } from "../mui/theme";
 
 const Footer = () => {

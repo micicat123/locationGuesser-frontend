@@ -1,19 +1,6 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import { SyntheticEvent, useEffect, useState } from "react";
-import { buttonStyle } from "../../../mui/theme";
 import axios from "axios";
-import Cookies from "js-cookie";
-import { Visibility, VisibilityOff, WindowSharp } from "@mui/icons-material";
 import UpdateSuccess from "../../popups/location/user/update-success";
 import logAction from "../../common/log-action";
 

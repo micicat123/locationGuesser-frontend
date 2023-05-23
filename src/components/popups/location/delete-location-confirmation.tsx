@@ -1,18 +1,12 @@
 import {
-  Avatar,
-  Box,
   Button,
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   ThemeProvider,
   Typography,
 } from "@mui/material";
 import { MUITheme, buttonStyle } from "../../../mui/theme";
 import { useState } from "react";
-import ClearIcon from "@mui/icons-material/Clear";
 import axios from "axios";
 import Cookies from "js-cookie";
 import logAction from "../../common/log-action";

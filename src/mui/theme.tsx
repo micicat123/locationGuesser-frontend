@@ -1,4 +1,4 @@
-import { Breakpoint, PaletteOptions, createTheme } from "@mui/material";
+import { PaletteOptions, createTheme } from "@mui/material";
 
 interface CustomPaletteOptions extends PaletteOptions {
   gradients: {

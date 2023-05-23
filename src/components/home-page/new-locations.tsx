@@ -4,7 +4,6 @@ import axios from "axios";
 import { Link } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import logAction from "../common/log-action";
-import { buttonStyle } from "../../mui/theme";
 
 const MostRecentLocations = (props: {
   recentLocations: any[];

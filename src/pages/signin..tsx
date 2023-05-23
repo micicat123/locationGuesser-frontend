@@ -1,7 +1,7 @@
 import { SyntheticEvent, useState } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
-import { Box, Grid, Hidden, ThemeProvider, Typography } from "@mui/material";
+import { Box, Grid, Hidden, ThemeProvider } from "@mui/material";
 import { MUITheme } from "../mui/theme";
 import LoginForm from "../components/forms/login.form";
 import Nav from "../components/Nav";

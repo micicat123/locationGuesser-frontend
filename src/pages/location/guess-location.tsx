@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import Wrapper from "../../components/Wrapper";
 import { MUITheme, buttonStyle } from "../../mui/theme";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { isEqual } from "lodash";
 import {
@@ -32,6 +32,11 @@ const GuessLocation = () => {
     if (location.state.errorDistance) {
       setErrorDistance(location.state.errorDistance);
       setLocationName(location.state.locationName);
+      const newMarker = {
+        lat: Number(location.state.location.location.latitude),
+        lng: Number(location.state.location.location.longitude),
+      };
+      setMarker(newMarker);
     }
   }, []);
 
@@ -89,6 +94,7 @@ const GuessLocation = () => {
               height={280}
               style={{
                 objectFit: "cover",
+                objectPosition: "bottom",
                 marginTop: "16px",
                 display: "block",
                 marginLeft: "auto",

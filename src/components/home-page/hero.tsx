@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Hidden,
-  ThemeProvider,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Box, Button, Hidden, ThemeProvider, Typography } from "@mui/material";
 import { MUITheme, buttonStyle } from "../../mui/theme";
 import logAction from "../common/log-action";
 

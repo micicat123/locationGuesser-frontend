@@ -1,12 +1,7 @@
 import {
-  Avatar,
   Box,
-  Button,
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogContentText,
-  DialogTitle,
   FormControl,
   FormHelperText,
   Link,
@@ -14,10 +9,8 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { MUITheme, buttonStyle } from "../../../mui/theme";
+import { MUITheme } from "../../../mui/theme";
 import { useState } from "react";
-import ClearIcon from "@mui/icons-material/Clear";
-import DeleteLocationConfirm from "./delete-location-confirmation";
 import logAction from "../../common/log-action";
 import ConfirmReset from "./reset-sent";
 

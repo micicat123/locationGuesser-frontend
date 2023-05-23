@@ -1,5 +1,4 @@
 import {
-  Box,
   Dialog,
   DialogContent,
   ThemeProvider,
@@ -7,8 +6,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { MUITheme } from "../../../../mui/theme";
-import UpdateInfoForm from "../../../forms/user/update-info.form";
-import { User } from "../../../../models/user";
 import UpdatePassForm from "../../../forms/user/update-pass.form";
 
 const UpdatePass = () => {

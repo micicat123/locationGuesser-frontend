@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Avatar, Box, Grid, ThemeProvider, Typography } from "@mui/material";
+import { Avatar, Box, ThemeProvider, Typography } from "@mui/material";
 import { MUITheme } from "../mui/theme";
 import { Navigate, useLocation } from "react-router-dom";
 import { User } from "../models/user";
